@@ -1,0 +1,6 @@
+<div class="tr-value-bar-bar" style="{{barCss}}"></div>
+{{#if hasBlock}}
+    {{yield}}
+{{else}}
+    <span class="tr-value-bar-value">{{value}}</span>{{#if label}}<span class="tr-value-bar-label"> {{label}}</span>{{/if}}
+{{/if}}

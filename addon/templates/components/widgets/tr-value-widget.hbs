@@ -1,0 +1,11 @@
+{{#if icon}}
+    <i class="fa fa-{{icon}}" aria-hidden="true"></i>
+{{/if}}
+<h3><strong>{{displayValue}}</strong>{{safeLabel}}</h3>
+<label>
+    {{#if hasBlock}}
+        {{yield}}
+    {{else}}
+        {{text}}
+    {{/if}}
+</label>

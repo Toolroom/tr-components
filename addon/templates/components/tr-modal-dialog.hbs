@@ -1,0 +1,22 @@
+{{#if isVisible}}
+    {{#modal-dialog onClose=(action (mut onClose) true) translucentOverlay=true}}
+        {{#if header}}
+            <div class="modal-dialog-header">
+                {{header}}
+            </div>
+        {{/if}}
+        <div class="modal-dialog-content">
+            {{yield}}
+        </div>
+        {{#if isFooterVisible}}
+            <div class="modal-dialog-footer">
+                {{#if primaryAction}}
+                    {{tr-button-editor onClick=primaryAction text=primaryText isDisabled=primaryIsDisabled buttonClass="theme-background-accent-normal-interactive" class="pull-right"}}
+                {{/if}}
+                {{#if secondaryAction}}
+                    {{tr-button-editor onClick=secondaryAction text=secondaryText isDisabled=secondaryIsDisabled buttonClass="theme-background-accent-normal-interactive"}}
+                {{/if}}
+            </div>
+        {{/if}}
+    {{/modal-dialog}}
+{{/if}}

@@ -1,0 +1,12 @@
+{{#tr-editor as |e|}}
+    {{#e.label}}
+        {{tr-error-tooltip errors=errors}}
+        {{label}}
+    {{/e.label}}
+    {{#e.content}}
+        <div class="tr-checkbox-editor-control">
+            <div class="tr-checkbox-editor-placeholder"></div>
+            <div class="tr-checkbox-editor-check" {{action 'toggle'}}></div>
+        </div>
+    {{/e.content}}
+{{/tr-editor}}

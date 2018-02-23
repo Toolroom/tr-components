@@ -1,0 +1,7 @@
+{{#tr-button-editor text=text onClick=(action 'click')}}
+    {{yield (hash text=(component 'tr-container' classNames='tr-submenu-custom-text'))}}
+    <span class="tr-select-editor-button-arrow"><span>&#9660;</span></span>
+{{/tr-button-editor}}
+<div class="tr-submenu-children {{if isOpen 'is-open' 'is-closed'}}">
+    {{yield (hash items=(component 'tr-container'))}}
+</div>

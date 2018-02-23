@@ -1,0 +1,8 @@
+<div class="cb-splitview-wrapper">
+    <div class="cb-splitview-pane theme-background-lowest">
+        {{yield (hash pane=(component 'tr-contentpresenter'))}}
+    </div>
+    <div class="cb-splitview-content">
+        {{yield (hash content=(component 'tr-contentpresenter'))}}
+    </div>
+</div>

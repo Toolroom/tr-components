@@ -1,0 +1,44 @@
+{{#if isEditing}}
+    {{#each (tr-range 0 20) as |x-index|}}
+        {{#each (tr-range 0 20) as |y-index|}}
+            <div class="tr-board-widget tr-widget-placeholder tr-board-widget-x-{{x-index}} tr-board-widget-y-{{y-index}} tr-board-widget-w-1 tr-board-widget-h-1 ember-view">{{range}}</div>
+        {{/each}}
+    {{/each}}
+{{/if}}
+
+{{yield (hash widget=(component 'widgets/tr-widget'
+        boardId=id data=data isEditing=isEditing onChange=(action 'updateWidget')))}}
+
+{{yield (hash value-widget=(component 'widgets/tr-value-widget'
+        boardId=id data=data isEditing=isEditing onChange=(action 'updateWidget')))}}
+
+{{yield (hash chart-widget=(component 'widgets/tr-chart'
+        boardId=id data=data isEditing=isEditing onChange=(action 'updateWidget')
+        content=content chartOptions=chartOptions))}}
+
+{{yield (hash traffic-light=(component 'widgets/tr-traffic-light'
+    boardId=id data=data isEditing=isEditing onChange=(action 'updateWidget')))}}
+
+{{#if isEditable}}
+    <div class="tr-board-trigger-panel">
+        {{#if isEditing}}
+            <div><i class="fa fa-plus" {{action 'doAddWidget'}}></i></div>
+            <div>
+                <i class="fa fa-check" {{action 'doFinishEditWidget'}}></i>
+            </div>
+            <!--<div>
+                <i class="fa fa-check" {{action 'doFinishEditWidget' scope}}></i>
+            </div>
+            <div>
+                <i class="fa fa-check" {{action 'doFinishEditWidget' scope session.user}}></i>
+            </div>-->
+        {{/if}}
+        {{#unless isEditing}}
+            <div><i class="fa fa-pencil" {{action 'doEditWidget'}}></i></div>
+        {{/unless}}
+    </div>
+{{/if}}
+{{#if isLoading}}
+    <div class="tr-board-loading-overlay"></div>
+    {{#tr-loader size='large'}}{{t 'cockpit.loading'}}{{/tr-loader}}
+{{/if}}

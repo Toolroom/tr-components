@@ -1,0 +1,12 @@
+{{#if errors}}
+    <span class="tr-error-tooltip error">
+        &#x25C9;
+        <span class="tr-error-tooltip-content">
+            {{yield}}
+            {{#each errors as |error idx|}}
+                {{#if idx}}<br/>{{/if}}
+                {{error.message}}
+            {{/each}}
+        </span>
+    </span>
+{{/if}}

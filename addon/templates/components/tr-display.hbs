@@ -1,0 +1,18 @@
+{{#tr-editor as |e|}}
+    {{#e.label}}{{label}}{{/e.label}}
+    {{#e.content}}
+        {{#if type 'date'}}
+            {{#if format}}
+                {{moment-format value format}}
+            {{else}}
+                {{moment-format value}}
+            {{/if}}
+        {{else}}
+            {{#if value}}
+                {{value}}
+            {{else}}
+                <span class="input-placeholder">{{placeholder}}</span>
+            {{/if}}
+        {{/if}}
+    {{/e.content}}
+{{/tr-editor}}

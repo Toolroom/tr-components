@@ -1,0 +1,27 @@
+<div class="tr-traffic-light-image"></div>
+<table class="tr-board-widget-container">
+    <tr class="tr-board-widget-header">
+        <td>
+            <h3>{{title}}</h3>
+            <label>{{subTitle}}</label>
+        </td>
+    </tr>
+    <tr class="tr-board-widget-content">
+        <td>
+
+        </td>
+    </tr>
+    <tr class="tr-board-widget-footer">
+        <td>
+            <p>
+                <small class="fade">
+                    {{#if hasBlock}}
+                        {{yield}}
+                    {{else}}
+                        {{text}}
+                    {{/if}}
+                </small>
+            </p>
+        </td>
+    </tr>
+</table>

@@ -1,0 +1,14 @@
+<table class="tr-board-widget-container">
+    <tr class="tr-board-widget-content">
+        <td>
+            {{tr-chart mode=mode chartOptions=internalChartOptions content=content theme=theme width=absWidth height=absHeight}}
+        </td>
+    </tr>
+    <tr class="tr-board-widget-footer">
+        <td>
+            <p>
+                {{yield}}
+            </p>
+        </td>
+    </tr>
+</table>

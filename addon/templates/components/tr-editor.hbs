@@ -1,0 +1,8 @@
+{{#tr-label}}
+    {{yield (hash label=(component 'tr-contentpresenter'))}}
+{{/tr-label}}
+<div class="tr-editor-content-wrapper">
+    {{yield (hash prefix=(component 'tr-contentpresenter' class='tr-editor-prefix'))}}
+    {{yield (hash content=(component 'tr-contentpresenter' class='tr-editor-content'))}}
+    {{yield (hash postfix=(component 'tr-contentpresenter' class='tr-editor-postfix'))}}
+</div>

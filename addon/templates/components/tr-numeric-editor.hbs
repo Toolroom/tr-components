@@ -1,0 +1,19 @@
+{{#tr-editor as |e|}}
+    {{#e.label}}
+        {{tr-error-tooltip errors=errors}}
+        {{label}}
+    {{/e.label}}
+    {{#if prefix}}
+        {{#e.prefix}}
+            {{tr-string-html prefix}}
+        {{/e.prefix}}
+    {{/if}}
+    {{#e.content}}
+        {{input value=internalEditValue placeholder=placeholder disabled=isDisabled readonly=isReadonly on="key-press,key-up,key-down,focus-in,focus-out"}}
+    {{/e.content}}
+    {{#if postfix}}
+        {{#e.postfix}}
+            {{tr-string-html postfix}}
+        {{/e.postfix}}
+    {{/if}}
+{{/tr-editor}}

@@ -1,0 +1,19 @@
+{{#if image}}
+    <div class="tr-image-upload-image" style="{{safeImage}}"></div>
+{{else}}
+    {{#if showImagePlaceholder}}
+        <div class="tr-image-upload-image-placeholder">{{imagePlaceholder}}</div>
+    {{/if}}
+{{/if}}
+
+{{#if showImageUpload}}
+    {{#file-upload name="photos"
+        accept="image/*"
+        multiple=false
+        onfileadd=(action "uploadFile") class="tr-image-upload-placeholder"}}
+        <i class="fa fa-upload fa-2x"></i>
+    {{/file-upload}}
+    {{#if image}}
+        <span class="tr-image-upload-image-remove" {{action 'deleteFile' image bubbles=false}}><i class="fa fa-trash-o"></i></span>
+    {{/if}}
+{{/if}}

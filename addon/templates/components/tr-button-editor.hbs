@@ -1,0 +1,25 @@
+{{#tr-editor as |e|}}
+    {{#if label}}
+        {{#e.label}}
+            {{tr-error-tooltip errors=errors}}
+            {{label}}
+        {{/e.label}}
+    {{/if}}
+    {{#e.content}}
+        <button type="{{type}}" class={{buttonClass}} disabled={{isDisabled}} readonly={{isReadonly}} {{action "onClick" value}}>
+                {{#if (tr-eq style 'toggle')}}
+                    <span class="tr-button-editor-toggle-icon">
+                        &#10004;
+                    </span>
+                {{/if}}
+                {{#if text}}
+                    {{text}}
+                {{else}}
+                    {{#if placeholder}}
+                        <span class="input-placeholder">{{placeholder}}</span>
+                    {{/if}}
+                {{/if}}
+                {{yield}}
+        </button>
+    {{/e.content}}
+{{/tr-editor}}

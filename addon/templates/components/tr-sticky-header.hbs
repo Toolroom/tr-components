@@ -1,0 +1,12 @@
+{{#if showImage}}
+    {{#tr-image-upload image=image imagePlaceholder=imagePlaceholder showImageUpload=showImageUpload showImagePlaceholder=showImagePlaceholder onUpload=onUpload onDelete=onDelete}}
+        {{imagePlaceholder}}
+    {{/tr-image-upload}}
+{{/if}}
+<div class="tr-sticky-header-content">
+    <h2>{{header}}</h2>
+    {{#if subheader}}
+        <label>{{subheader}}</label>
+    {{/if}}
+</div>
+{{yield (hash menu=(component 'tr-menubar'))}}
