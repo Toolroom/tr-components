@@ -1,2 +1,2 @@
-export { default } from 'tr-components/components/tr-checkbox-editor';
+export { default } from '@toolroom/tr-ember-components/components/tr-checkbox-editor';
 

@@ -1,5 +1,5 @@
 'use strict';
 
 module.exports = {
-  name: 'tr-components'
+  name: 'tr-ember-components'
 };

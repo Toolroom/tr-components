@@ -1,2 +1,2 @@
-export { default } from 'tr-components/components/widgets/tr-value-widget';
+export { default } from '@toolroom/tr-ember-components/components/widgets/tr-value-widget';
 

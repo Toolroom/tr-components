@@ -1,2 +1,2 @@
-export { default } from 'tr-components/components/tr-password-editor';
+export { default } from '@toolroom/tr-ember-components/components/tr-password-editor';
 

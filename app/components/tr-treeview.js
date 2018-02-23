@@ -1,2 +1,2 @@
-export { default } from 'tr-components/components/tr-treeview';
+export { default } from '@toolroom/tr-ember-components/components/tr-treeview';
 

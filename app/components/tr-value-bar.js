@@ -1,2 +1,2 @@
-export { default } from 'tr-components/components/tr-value-bar';
+export { default } from '@toolroom/tr-ember-components/components/tr-value-bar';
 

@@ -1,2 +1,2 @@
-export { default } from 'tr-components/components/tr-sticky-header';
+export { default } from '@toolroom/tr-ember-components/components/tr-sticky-header';
 
