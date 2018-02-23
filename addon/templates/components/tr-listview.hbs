@@ -3,17 +3,17 @@
     {{yield (hash menu=(component 'tr-container'))}}
 
     {{#if items}}
-        <ul class="cb-listview-items">
+        <ul class="tr-listview-items">
             {{#each _items as |item|}}
                 {{#if linkRouteName}}
                     {{!-- Enable .active on the li element --}}
-                    {{#link-to linkRouteName item.id current-when=linkRouteCurrentWhen tagName="li" href=false class="cb-listview-item" classNameBindings="itemClass"}}
+                    {{#link-to linkRouteName item.id current-when=linkRouteCurrentWhen tagName="li" href=false class="tr-listview-item" classNameBindings="itemClass"}}
                         {{#link-to linkRouteName item.id}}
                             {{yield (hash data=item.item itemTemplate=(component 'tr-container'))}}
                         {{/link-to}}
                     {{/link-to}}
                 {{else}}
-                    <li class="cb-listview-item {{itemClass}} {{if (tr-eq item selectedItem) 'active'}}" {{action "select" item.item}}>
+                    <li class="tr-listview-item {{itemClass}} {{if (tr-eq item selectedItem) 'active'}}" {{action "select" item.item}}>
                         {{yield (hash data=item.item itemTemplate=(component 'tr-container'))}}
                     </li>
                 {{/if}}

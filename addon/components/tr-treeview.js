@@ -1,4 +1,4 @@
-import Ember from '@ember';
+import Ember from 'ember';
 import layout from '../templates/components/tr-treeview';
 const { later, cancel } = Ember.run;
 

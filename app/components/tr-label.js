@@ -1,2 +1,2 @@
-export { default } from '@toolroom/tr-ember-components/components/tr-label';
+export { default } from 'tr-ember-components/components/tr-label';
 

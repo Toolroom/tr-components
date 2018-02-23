@@ -1,4 +1,4 @@
-import Ember from '@ember';
+import Ember from 'ember';
 import Editor from './tr-editor';
 import layout from '../templates/components/tr-text-editor';
 

@@ -1,2 +1,2 @@
-export { default } from '@toolroom/tr-ember-components/components/tr-container';
+export { default } from 'tr-ember-components/components/tr-container';
 

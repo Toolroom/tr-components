@@ -1,4 +1,4 @@
-import Ember from '@ember';
+import Ember from 'ember';
 import Editor from './tr-text-editor';
 import layout from '../templates/components/tr-numeric-editor';
 
@@ -249,13 +249,13 @@ export default Editor.extend({
     },
 
     keyDown: function(evt) {
-        /*var decimalSeparator = this._getLocalDecimalSeparator(),
-            charCodeWhitelist = [
-                8/!*backspace/delete*!/,
-                46/!*delete*!/,
-                37,38,39,40/!*arrows*!/,
-                35,36/!*home, end*!/
-            ];*/
+        //var decimalSeparator = this._getLocalDecimalSeparator(),
+        var charCodeWhitelist = [
+            8/*backspace/delete*/,
+            46/*delete*/,
+            37,38,39,40/*arrows*/,
+            35,36/*home, end*/
+        ];
 
         //Remember current ctrl-key state
         var ctrlDown = this._ctrlDown;

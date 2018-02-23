@@ -1,4 +1,4 @@
-import Ember from '@ember';
+import Ember from 'ember';
 import Editor from './tr-editor';
 import OutsideClick from '../mixins/tr-outside-click';
 import layout from '../templates/components/tr-select-editor';

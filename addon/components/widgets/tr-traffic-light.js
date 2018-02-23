@@ -1,4 +1,4 @@
-import Ember from '@ember';
+import Ember from 'ember';
 import Widget from './tr-widget';
 import layout from '../../templates/components/widgets/tr-traffic-light';
 
