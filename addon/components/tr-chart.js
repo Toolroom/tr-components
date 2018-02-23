@@ -1,7 +1,10 @@
-import Ember from 'ember';
+import Ember from '@ember';
 import EmberHighChartsComponent from 'ember-highcharts/components/high-charts';
+import layout from '../templates/components/tr-chart';
 
 export default EmberHighChartsComponent.extend({
+    layout,
+    
     contentDidChange: Ember.observer('content', 'content.@each.isLoaded', function() {
         var chart = this.get('chart');
 

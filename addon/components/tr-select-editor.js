@@ -1,8 +1,10 @@
-import Ember from 'ember';
+import Ember from '@ember';
 import Editor from './tr-editor';
 import OutsideClick from '../mixins/tr-outside-click';
+import layout from '../templates/components/tr-select-editor';
 
 export default Editor.extend(OutsideClick, {
+    layout,
     init: function() {
         this._super();
         this.on('didInsertElement', this, function() {

@@ -1,6 +1,8 @@
-import Ember from 'ember';
+import Ember from '@ember';
+import layout from '../templates/components/tr-value-bar';
 
 export default Ember.Component.extend({
+    layout,
     classNames: 'tr-value-bar',
     value: 0,
     max: 100,

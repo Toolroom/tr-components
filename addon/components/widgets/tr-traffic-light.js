@@ -1,7 +1,10 @@
-import Ember from 'ember';
+import Ember from '@ember';
 import Widget from './tr-widget';
+import layout from '../../templates/components/widgets/tr-traffic-light';
 
 export default Widget.extend({
+    layout,
+    
     classNames: 'tr-traffic-light',
 
     value: 0,

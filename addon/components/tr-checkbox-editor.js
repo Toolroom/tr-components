@@ -1,7 +1,10 @@
-import Ember from 'ember';
+import Ember from '@ember';
 import Editor from './tr-editor';
+import layout from '../templates/components/tr-checkbox-editor';
 
 export default Editor.extend({
+    layout,
+
     classNames: 'tr-checkbox-editor',
     classNameBindings: ['_checkStateClass', '_placeholderStateClass'],
 

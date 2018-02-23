@@ -1,6 +1,8 @@
-import Ember from 'ember';
+import Ember from '@ember';
+import layout from '../templates/components/tr-text-loader';
 
 export default Ember.Component.extend({
+    layout,
     tagName: 'label',
     classNames: 'tr-text-loader',
     text: '',

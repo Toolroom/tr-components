@@ -1,6 +1,8 @@
-import Ember from 'ember';
+import Ember from '@ember';
+import layout from '../templates/components/tr-splitview';
 
 export default Ember.Component.extend({
+    layout,
     classNames: 'cb-splitview',
 
     classNameBindings: ['hasContent', 'isOpen', 'size', 'sidebarMode:sidebar-mode:content-mode'],

@@ -1,7 +1,9 @@
-import Ember from 'ember';
+import Ember from '@ember';
 import Editor from './tr-editor';
+import layout from '../templates/components/tr-text-editor';
 
 export default Editor.extend({
+    layout,
     classNames: 'tr-text-editor',
 
     placeholder: null,

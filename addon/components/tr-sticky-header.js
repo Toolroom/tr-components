@@ -1,6 +1,8 @@
-import Ember from 'ember';
+import Ember from '@ember';
+import layout from '../templates/components/tr-sticky-header';
 
 export default Ember.Component.extend({
+    layout,
     classNames: 'tr-sticky-header',
     classNameBindings: ['showImage:tr-sticky-header-with-image','image:tr-sticky-header-with-image'],
 

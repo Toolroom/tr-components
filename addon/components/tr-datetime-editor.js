@@ -1,7 +1,10 @@
-import Ember from 'ember';
+import Ember from '@ember';
 import Editor from './tr-editor';
+import layout from '../templates/components/tr-datetime-editor';
 
 export default Editor.extend({
+    layout,
+
     didInsertElement: function() {
         var self = this;
 

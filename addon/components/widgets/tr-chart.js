@@ -1,7 +1,10 @@
-import Ember from 'ember';
+import Ember from '@ember';
 import Widget from './tr-widget';
+import layout from '../../templates/components/widgets/tr-chart';
 
 export default Widget.extend({
+    layout,
+    
     chartOptions: null,
     content: null,
     mode: null,

@@ -1,7 +1,10 @@
-import Ember from 'ember';
+import Ember from '@ember';
 import Editor from './tr-editor';
+import layout from '../templates/components/tr-language-select';
 
 export default Editor.extend({
+    layout,
+
     i18n: Ember.inject.service(),
     moment: Ember.inject.service(),
     classNames: ['tr-language-select'],

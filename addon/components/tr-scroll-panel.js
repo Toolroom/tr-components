@@ -1,6 +1,8 @@
-import Ember from 'ember';
+import Ember from '@ember';
+import layout from '../templates/components/tr-scroll-panel';
 
 export default Ember.Component.extend({
+    layout,
     classNames: 'tr-scroll-panel',
     classNameBindings: ['showScrollbar:scrollbar-visible:scrollbar-hidden', '_autohide:scrollbar-autohide'],
 

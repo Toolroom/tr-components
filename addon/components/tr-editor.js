@@ -1,6 +1,9 @@
-import Ember from 'ember';
+import Ember from '@ember';
+import layout from '../templates/components/tr-editor';
 
 export default Ember.Component.extend({
+    layout,
+
     attributeBindings: ['title'],
 
     classNames: 'tr-editor',
