@@ -1,7 +1,7 @@
 {{#if errors}}
     <span class="tr-error-tooltip error">
         &#x25C9;
-        <span class="tr-error-tooltip-content">
+        <span class="tr-error-tooltip-content-wrapper">
             {{yield}}
             {{#each errors as |error idx|}}
                 {{#if idx}}<br/>{{/if}}

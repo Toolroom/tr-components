@@ -1,21 +1,23 @@
-$themes: (
-        cleanbird-light: (
-                background-color: #fff,
-                foreground-color: #222,
-                accent-color: #009fe3,
-                highlight-color: #d00345,
-                success-color: #2fc066,
-                warning-color: #cbaf43,
-                error-color: #e15356
+//https://medium.com/@dmitriy.borodiy/easy-color-theming-with-scss-bc38fd5734d1
 
-        ),
-        cleanbird-dark: (
-                background-color: #222,
-                foreground-color: #ccc1b9,
-                accent-color: #009fe3,
-                highlight-color: #d00345,
-                success-color: #2fc066,
-                warning-color: #cbaf43,
-                error-color: #e15356
-        ),
+$themes: (
+  cleanbird-light: (
+          background-color: #fff,
+          foreground-color: #222,
+          accent-color: #009fe3,
+          highlight-color: #d00345,
+          success-color: #2fc066,
+          warning-color: #cbaf43,
+          error-color: #e15356
+
+  ),
+  cleanbird-dark: (
+          background-color: #222,
+          foreground-color: #ccc1b9,
+          accent-color: #009fe3,
+          highlight-color: #d00345,
+          success-color: #2fc066,
+          warning-color: #cbaf43,
+          error-color: #e15356
+  ),
 );
