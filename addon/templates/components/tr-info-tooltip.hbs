@@ -1,0 +1,10 @@
+{{label}}
+<span class="tr-info-tooltip-content-wrapper">
+    {{#if title}}
+        <div class="tr-info-tooltip-title">{{title}}</div>
+    {{/if}}
+    {{#if content}}
+        <div class="tr-info-tooltip-content">{{content}}</div>
+    {{/if}}
+    {{yield}}
+</span>
