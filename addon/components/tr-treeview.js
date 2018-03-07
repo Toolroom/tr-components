@@ -4,6 +4,7 @@ const { later, cancel } = Ember.run;
 
 export default Ember.Component.extend({
     layout,
+
     classNames: 'tr-treeview',
     classNameBindings: 'isSorting',
     tagName: 'ul',
@@ -12,11 +13,20 @@ export default Ember.Component.extend({
 
     enableSorting: false,
     isSorting: false,
+    showPath: false,
+
+    childItemsPropertyName: 'items',
+    isBusyPropertyName: 'isBusy',
+    isExpandedPropertyName: 'isExpanded',
+    hasAnyChildItemPropertyName: 'hasAnyChild',
+    isDirtyPropertyName: 'isDirty',
 
     routeName: null,
+    itemComponentName: 'tr-container',
 
     didInsertElement: function(){
-        var self = this;
+        var self = this,
+            childItemsPropertyName = this.get('childItemsPropertyName');
         Ember.run.schedule('actions', function () {
             if(!self.get('enableSorting')) return;
             self.$().sortable({
@@ -30,8 +40,8 @@ export default Ember.Component.extend({
                 revert: true,
                 start: function(event, ui) {
                     self.set('isSorting', true);
-                    var realmId = ui.item.attr('data-realm-id'),
-                        model = self.get('model.childRealms').find(function(realm) { return realm.get('id').toString() == realmId; }),
+                    var itemId = ui.item.attr('data-item-id'),
+                        model = self.get('model.' + childItemsPropertyName).find(function(item) { return item.get('id').toString() == itemId; }),
                         index = $(ui.item).index();
 
                     //Ember.run.schedule('actions', function () {
@@ -39,8 +49,8 @@ export default Ember.Component.extend({
                     //});
                 },
                 update: function(event, ui) {
-                    var realmId = ui.item.attr('data-realm-id'),
-                        model = self.get('model.childRealms').find(function(realm) { return realm.get('id').toString() == realmId; }),
+                    var itemId = ui.item.attr('data-item-id'),
+                        model = self.get('model.' + childItemsPropertyName).find(function(item) { return item.get('id').toString() == itemId; }),
                         index = $(ui.item).index();
 
                     //Ember.run.schedule('actions', function () {
@@ -53,8 +63,8 @@ export default Ember.Component.extend({
                         this._sortingStopCallback = null;
                     }
 
-                    var realmId = ui.item.attr('data-realm-id'),
-                        model = self.get('model.childRealms').find(function(realm) { return realm.get('id').toString() == realmId; }),
+                    var itemId = ui.item.attr('data-item-id'),
+                        model = self.get('model.' + childItemsPropertyName).find(function(item) { return item.get('id').toString() == itemId; }),
                         index = $(ui.item).index();
 
                     //Ember.run.schedule('actions', function () {
@@ -69,6 +79,12 @@ export default Ember.Component.extend({
             });
         });
     },
+
+    self: Ember.computed({
+        get() {
+            return this;
+        }
+    }),
 
     actions: {
         toggle (item){
