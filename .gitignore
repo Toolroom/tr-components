@@ -21,3 +21,10 @@ testem.log
 .node_modules.ember-try/
 bower.json.ember-try
 package.json.ember-try
+/.idea/misc.xml
+/.idea/modules.xml
+/.idea/tr-ember-components.iml
+/.idea/vcs.xml
+/.idea/watcherTasks.xml
+/.idea/workspace.xml
+/.idea/watcherTasks.xml
