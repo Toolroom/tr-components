@@ -26,9 +26,13 @@ export default Editor.extend(OutsideClick, {
 
     items: null,
 
+    isMultiple: false,
+
     selectedItem: null,
     selectedValue: null,
     selectedKey: null,
+
+    selectedItems: null,
 
     suggestedItem: null,
     suggestedValue: null,
@@ -49,7 +53,7 @@ export default Editor.extend(OutsideClick, {
     emptyText: 'Keine Auswahl verfügbar',
 
     /**
-     * Modes: Select, Flat
+     * Modes: Select, Flat, Popout
      */
     style: 'select',
     styleClassName: Ember.computed('style', {
@@ -79,6 +83,9 @@ export default Editor.extend(OutsideClick, {
      * Item property to use as id value
      */
     idPropertyName: 'id',
+
+    popoutHeader: null,
+    popoutPrimaryText: 'Done',
 
     /*** OBSERVER ***/
     _itemsChanged: Ember.observer('items', 'items.@each', function() {
@@ -123,6 +130,10 @@ export default Editor.extend(OutsideClick, {
     }),
 
 
+    /*** Exposed Events **/
+    onSelectedItemChanged: null,
+    onSelectedItemsChanged: null,
+
     /*** UI MEthods ***/
 
     open: function() {
@@ -137,17 +148,25 @@ export default Editor.extend(OutsideClick, {
 
     /*** Events **/
     clickOutside() {
-        var selectedItem = this.get('selectedItem'),
+        if(this.get('style') === 'popout' && this.get('isMultiple')) {
+          //should be handled by modal dialog
+          return;
+        }
+
+        let selectedItem = this.get('selectedItem'),
             suggestedItem = this.get('suggestedItem') || selectedItem;
 
         this.set('selectedItem', suggestedItem);
-        //next(this, function() {
-            this.set('suggestedItem', null);
-            this.close();
-        //});
+        this.set('suggestedItem', null);
+        this.close();
     },
 
     clickInside() {
+        if(this.get('isMultiple')) {
+          this.open();
+          return;
+        }
+
         if(this.get('isDisabled')) return;
 
         this.toggle();
@@ -157,6 +176,11 @@ export default Editor.extend(OutsideClick, {
         //this.open();
     },
     focusOutside(){
+        if(this.get('style') === 'popout' && this.get('isMultiple')) {
+          //should be handled by modal dialog
+          return;
+        }
+
         if(this.get('isDisabled')) return;
 
         this.clickOutside();
@@ -235,13 +259,27 @@ export default Editor.extend(OutsideClick, {
             if(action) {
                 action(item);
             }
-            this.close();
+
+            if(this.get('isMultiple') && this.get('selectedItems')) {
+              if(this.get('selectedItems').contains(item)) {
+                this.get('selectedItems').removeObject(item);
+              } else {
+                this.get('selectedItems').pushObject(item);
+              }
+            }
+
+            action = this.get('onSelectedItemsChanged');
+            if(action) {
+              action(item);
+            }
+            if(!this.get('isMultiple')) this.close();
         },
         onClearValue() {
             if(this.get('isDisabled') || this.get('isReadonly')) return;
 
             this.set('selectedItem', null);
-            this.close();
+
+            if(!this.get('isMultiple')) this.close();
         },
         onToggle(key) {
             if(this.get('isDisabled') || this.get('isReadonly')) return;
@@ -253,6 +291,9 @@ export default Editor.extend(OutsideClick, {
 
             this.toggle();
             this._clickIsInside = true;
+        },
+        onClose() {
+          this.close();
         }
     }
 });

@@ -5,6 +5,40 @@
             onClick=(action 'onSelectedItemChanged' item)
         }}
     {{/each}}
+{{else if (tr-eq style 'popout')}}
+    {{#tr-button-editor text=(get selectedItem valueProperty) label=label placeholder=placeholder errors=errors buttonClass=buttonClass isDisabled=isDisabled readonly=isReadonly}}
+      {{#unless isDisabledOrReadonly}}
+        {{#if allowNull}}
+          <button class="tr-select-editor-button-clear" {{action 'onClearValue' bubbles=false}} disabled="{{isDisabled}}" readonly="{{isReadonly}}"><span>&#10006;</span></button>
+        {{/if}}
+      {{/unless}}
+      <button class="tr-select-editor-button-arrow" {{action 'onToggleState' bubbles=false}} disabled={{isDisabled}}><span>&#128269;</span></button>
+    {{/tr-button-editor}}
+    {{#unless isDisabled}}
+        {{#tr-modal-dialog header=popoutHeader isVisible=isOpen
+             primaryAction=(action 'onToggleState') primaryText=popoutPrimaryText}}
+            {{#with emptyText}}
+                {{#tr-listview items=filteredItems selectedItem=(readonly selectedItem) onSelectedItemChanged=(action 'onSelectedItemChanged') as |item|}}
+                    {{#if item.itemTemplate}}
+                        {{yield (hash data=item.data isSelected=true itemTemplate=(component 'tr-container'))}}
+                    {{else}}
+                        {{#if valueProperty}}
+                            <span title="{{get item.data valueProperty}}">{{get item.data valueProperty}}</span>
+                        {{else}}
+                            <span title="{{item.data}}">{{item.data}}</span>
+                        {{/if}}
+                    {{/if}}
+                    {{#item.empty}}
+                        {{#if emptyText}}
+                            <span class="tr-select-editor-empty">
+                              {{emptyText}}
+                            </span>
+                        {{/if}}
+                    {{/item.empty}}
+                {{/tr-listview}}
+            {{/with}}
+        {{/tr-modal-dialog}}
+    {{/unless}}
 {{else}}
     {{#if editable}}
         {{input value=(readonly suggestedValue) class="tr-select-editor-suggestion" readonly="readonly"}}

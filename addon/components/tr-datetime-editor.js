@@ -36,7 +36,8 @@ export default Editor.extend({
     },
 
     classNames: 'tr-datetime-editor',
-
+    classNameBindings: 'displayMode',
+	
     value: null,
 
     displayMode: 'picker',

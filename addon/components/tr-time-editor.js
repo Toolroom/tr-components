@@ -66,6 +66,43 @@ export default Editor.extend({
 
     isTime: true,
 
+    _dateValue: null,
+    dateValue: Ember.computed({
+        get() {
+            var dateValue = this._dateValue,
+                editObject = this._editObject;
+
+            if(editObject)
+            {
+                if(!dateValue) {
+                    dateValue = this._dateValue = new Date();
+                }
+                else
+                {
+                    //copy date to have a new object that triggers observers
+                    dateValue = new Date(dateValue.getTime());
+                }
+
+                dateValue.setHours(editObject.hours);
+                dateValue.setMinutes(editObject.minutes);
+                dateValue.setSeconds(editObject.seconds);
+            }
+
+            return dateValue;
+        },
+        set(key, date) {
+            this._dateValue = date;
+
+            if(date) {
+                this.set('value', `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
+            } else {
+                this.set('value', null);
+            }
+
+            return this._dateValue;
+        }
+    }),
+
     editObject: Ember.computed({
         set(sender, value) {
             this._editObject = value;
@@ -73,6 +110,7 @@ export default Editor.extend({
             this.set('value', this._getStringValue(this._editObject));
 
             this.notifyPropertyChange('editValue');
+            this.notifyPropertyChange('dateValue');
         },
         get() {
             return this._editObject;

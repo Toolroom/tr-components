@@ -90,7 +90,7 @@ export default Ember.Mixin.create({
 
         this._focus_fun = function(e){
             //next(self, self.addFocusOutsideListener);
-            self.addFocusOutsideListener
+            self.addFocusOutsideListener();
             self.focusInside(e);
         };
 
