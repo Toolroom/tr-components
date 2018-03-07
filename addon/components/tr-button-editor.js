@@ -9,7 +9,8 @@ export default Editor.extend({
 
     classNames: 'tr-button-editor',
     classNameBindings: ['highlight:is-highlight', 'isOn:is-on:is-off', 'styleClassName'],
-    placeholder: Ember.String.htmlSafe("&nbsp;"),
+    //placeholder: Ember.String.htmlSafe("&nbsp;"),
+    placeholder: null,
     buttonClass: null,
 
     highlight: false,

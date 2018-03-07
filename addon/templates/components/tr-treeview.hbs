@@ -1,33 +1,19 @@
-{{#each model.orderedChildRealms as |realm|}}
-    <li class="tr-treeview-item {{if realm.inProgress 'in-progress'}} {{if realm.isExpanded "is-expanded" "is-collapsed"}} {{if realm.hasAnyChildRealm "is-node" "is-leaf"}} {{if realm.isDirty "is-dirty"}}" data-realm-id="{{realm.id}}">
-        {{#if realm.isDirty}}
-            <i class="tr-treeview-item-label icon fa fa-pencil"></i>
-        {{/if}}
-        <i class="tr-treeview-item-opener" style={{realm.backgroundStyle}} {{action 'toggle' realm}}><div class="spin circle"></div></i>
-        {{#link-to (mut routeName) realm.id class="tr-treeview-link"}}
-            {{#if realm.isDirty}}<span class="tr-treeview-item-label-placeholder"></span>{{/if}}
-            {{#if isSorting}}<span class="tr-treeview-item-label-sorting">{{realm.sorting}}</span>{{/if}}
-            {{#if realm.isNew}}
-                {{if realm.displayName realm.displayName '(Neuer Bereich)'}}
-            {{else}}
-                {{if realm.displayName realm.displayName '...'}}
-            {{/if}}
-        {{/link-to}}
-        {{#if showPath}}
-            <div class="path-view">
-                {{#link-to 'timeItems' 0}}{{realm.displayName}}{{/link-to}}
-                {{#each realm.realmPath as |pathRealm|}}
-                    {{#k-if-equals expression="!=" value1=pathRealm.id value2=realm.id}}
-                        <span> &gt; </span>{{#link-to 'realms' pathRealm.id}}{{pathRealm.displayName}}{{/link-to}}
-                    {{/k-if-equals}}
-                {{/each}}
-            </div>
-        {{/if}}
-        {{#if realm.isExpanded}}
-            {{#if realm.hasAnyChildRealm}}
-                {{tr-treeview routeName=(mut routeName) model=realm onToggle=(action "toggle")
-                enableSorting=enableSorting onStartSorting=(action 'startSorting') onUpdateSorting=(action 'updateSorting') onStopSorting=(action 'stopSorting')}}
+{{#each (get model childItemsPropertyName) as |item|}}
+    {{#component itemComponentName
+        tagName='li'
+        class="tr-treeview-item" data-item-id=(get item 'id')
+        routeName=(mut routeName) item=item isSorting=isSorting enableSorting=enableSorting showPath=showPath
+        onToggle=(action 'toggle') }}
+        {{#if (get item isExpandedPropertyName)}}
+            {{#if (get item hasAnyChildItemPropertyName)}}
+                {{#tr-treeview model=item routeName=(mut routeName) onToggle=onToggle
+                    enableSorting=enableSorting onStartSorting=onStartSorting onUpdateSorting=onUpdateSorting onStopSorting=onStopSorting
+                    childItemsPropertyName=childItemsPropertyName isBusyPropertyName=isBusyPropertyName
+                    isExpandedPropertyName=isExpandedPropertyName
+                    hasAnyChildItemPropertyName=hasAnyChildItemPropertyName isDirtyPropertyName=isDirtyPropertyName
+                    itemComponentName=itemComponentName}}
+                {{/tr-treeview}}
             {{/if}}
         {{/if}}
-    </li>
+    {{/component}}
 {{/each}}
