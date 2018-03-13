@@ -6,7 +6,7 @@
         }}
     {{/each}}
 {{else if (tr-eq style 'popout')}}
-    {{#tr-button-editor text=(get selectedItem valueProperty) label=label placeholder=placeholder errors=errors buttonClass=buttonClass isDisabled=isDisabled readonly=isReadonly}}
+    {{#tr-button-editor text=displayValue label=label placeholder=placeholder errors=errors buttonClass=buttonClass isDisabled=isDisabled readonly=isReadonly}}
       {{#unless isDisabledOrReadonly}}
         {{#if allowNull}}
           <button class="tr-select-editor-button-clear" {{action 'onClearValue' bubbles=false}} disabled="{{isDisabled}}" readonly="{{isReadonly}}"><span>&#10006;</span></button>
@@ -44,7 +44,7 @@
         {{input value=(readonly suggestedValue) class="tr-select-editor-suggestion" readonly="readonly"}}
         {{tr-text-editor value=(readonly selectedValue) label=label placeholder=placeholder errors=errors onTextChanged=(action 'onTextChanged')}}
     {{else}}
-        {{#tr-button-editor text=(get selectedItem valueProperty) label=label placeholder=placeholder errors=errors buttonClass=buttonClass isDisabled=isDisabled readonly=isReadonly}}
+        {{#tr-button-editor text=displayValue label=label placeholder=placeholder errors=errors buttonClass=buttonClass isDisabled=isDisabled readonly=isReadonly}}
             {{#unless isDisabledOrReadonly}}
                 {{#if allowNull}}
                     <button class="tr-select-editor-button-clear" {{action 'onClearValue' bubbles=false}} disabled="{{isDisabled}}" readonly="{{isReadonly}}"><span>&#10006;</span></button>
