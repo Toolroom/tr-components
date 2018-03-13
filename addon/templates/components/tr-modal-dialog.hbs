@@ -1,13 +1,13 @@
 {{#if isVisible}}
-    {{#modal-dialog onClose=(action (mut onClose) true) translucentOverlay=true}}
+    {{#modal-dialog onClose=(action (mut onClose) true) translucentOverlay=true wrapperClass=wrapperClass containerClassNames=containerClassNames}}
         {{#if header}}
             <div class="modal-dialog-header">
                 {{header}}
             </div>
         {{/if}}
-        <div class="modal-dialog-content">
+        {{#tr-scroll-panel class='modal-dialog-content'}}
             {{yield}}
-        </div>
+        {{/tr-scroll-panel}}
         {{#if isFooterVisible}}
             <div class="modal-dialog-footer">
                 {{#if primaryAction}}

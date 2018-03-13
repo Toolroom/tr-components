@@ -12,13 +12,13 @@
           <button class="tr-select-editor-button-clear" {{action 'onClearValue' bubbles=false}} disabled="{{isDisabled}}" readonly="{{isReadonly}}"><span>&#10006;</span></button>
         {{/if}}
       {{/unless}}
-      <button class="tr-select-editor-button-arrow" {{action 'onToggleState' bubbles=false}} disabled={{isDisabled}}><span>&#128269;</span></button>
+      <button class="tr-select-editor-button-arrow" {{action 'onToggleState' bubbles=false}} disabled={{isDisabled}}><span>&#9660;</span></button>
     {{/tr-button-editor}}
     {{#unless isDisabled}}
-        {{#tr-modal-dialog header=popoutHeader isVisible=isOpen
+        {{#tr-modal-dialog header=popoutHeader isVisible=isOpen wrapperClass="tr-select-editor-popout" isMessage=false
              primaryAction=(action 'onToggleState') primaryText=popoutPrimaryText}}
             {{#with emptyText}}
-                {{#tr-listview items=filteredItems selectedItem=(readonly selectedItem) onSelectedItemChanged=(action 'onSelectedItemChanged') as |item|}}
+                {{#tr-listview items=filteredItems itemClass=null selectedItem=(readonly selectedItem) onSelectedItemChanged=(action 'onSelectedItemChanged') as |item|}}
                     {{#if item.itemTemplate}}
                         {{yield (hash data=item.data isSelected=(array-contains selectedItems item.data) itemTemplate=(component 'tr-container'))}}
                     {{else}}

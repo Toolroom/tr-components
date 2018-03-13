@@ -16,6 +16,12 @@ export default Ember.Component.extend({
     onClose: null,
 
     isVisible: true,
+    isMessage: true,
+
+    wrapperClass: null,
+    containerClassNames: Ember.computed('isMessage', function() {
+        return this.get('isMessage') ? 'tr-message-box' : null;
+    }),
 
     isFooterVisible: Ember.computed('primaryAction', 'secondaryAction', {
         get() {

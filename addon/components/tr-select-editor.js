@@ -106,7 +106,7 @@ export default Editor.extend(OutsideClick, {
     idPropertyName: 'id',
 
     popoutHeader: null,
-    popoutPrimaryText: 'Done',
+    popoutPrimaryText: 'Ok',
 
     /*** OBSERVER ***/
     _itemsChanged: Ember.observer('items', 'items.@each', function() {
