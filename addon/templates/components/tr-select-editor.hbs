@@ -1,4 +1,7 @@
 {{#if (tr-eq style 'flat')}}
+    {{#tr-label}}
+        {{yield (hash label=(component 'tr-contentpresenter'))}}
+    {{/tr-label}}
     {{#each filteredItems as |item|}}
         {{tr-button-editor value=(get item keyProperty) text=(get item valueProperty) style="toggle"
             isOn=(tr-eq (get item keyProperty) selectedKey)
