@@ -4,7 +4,8 @@ import layout from '../templates/components/tr-button-editor';
 
 export default Editor.extend({
     layout,
-    
+    translationProperties: ['placeholder'],
+
     routing: Ember.inject.service('-routing'),
 
     classNames: 'tr-button-editor',

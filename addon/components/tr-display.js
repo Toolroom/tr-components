@@ -3,7 +3,8 @@ import layout from '../templates/components/tr-display';
 
 export default Editor.extend({
     layout,
-    
+    translationProperties: ['placeholder'],
+
     classNames: 'tr-display',
 
     /**
