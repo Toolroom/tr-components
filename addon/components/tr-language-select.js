@@ -10,6 +10,14 @@ export default Editor.extend({
     classNames: ['tr-language-select'],
     buttonClass: '',
 
+    /**
+     * Alignment of the combo content:
+     * auto - stretches the combo to the control width
+     * left - aligns combo to the left border of the control
+     * right - aligns combo to the right border of the control
+     */
+    align: 'auto',
+
     locales: Ember.computed('i18n.locale', 'i18n.locales', function() {
         const i18n = this.get('i18n');
         var items = this.get('i18n.locales').map(function (loc) {

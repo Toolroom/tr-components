@@ -79,13 +79,31 @@ export default Editor.extend(OutsideClick, {
      * Modes: Select, Flat, Popout
      */
     style: 'select',
-    styleClassName: Ember.computed('style', {
+
+    /**
+     * Computed css class for style
+     */
+    styleClassName: Ember.computed('style', 'align', {
         get() {
-            var style = (this.get('style') || '').toString().toLowerCase();
-            if(style === 'flat') return 'tr-select-editor-flat';
-            return 'tr-select-editor-select';
+            let style = (this.get('style') || '').toString().toLowerCase(),
+                align = (this.get('align') || '').toString().toLowerCase();
+
+            let classNames = [];
+
+            classNames.pushObject(['flat','select','popout'].indexOf(style) > -1 ? `tr-select-editor-${style}` : 'tr-select-editor-select');
+            classNames.pushObject(['auto','left','right'].indexOf(align) > -1 ? `tr-select-editor-align-${align}` : 'tr-select-editor-align-auto');
+
+            return classNames.join(' ');
         }
     }),
+
+    /**
+     * Alignment of the combo content:
+     * auto - stretches the combo to the control width
+     * left - aligns combo to the left border of the control
+     * right - aligns combo to the right border of the control
+     */
+    align: 'auto',
 
     /**
      * Toggles the item list
