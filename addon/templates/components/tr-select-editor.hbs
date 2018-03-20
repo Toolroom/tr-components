@@ -50,7 +50,7 @@
         {{#tr-button-editor text=displayValue label=label placeholder=placeholder errors=errors buttonClass=buttonClass isDisabled=isDisabled readonly=isReadonly}}
             {{#unless isDisabledOrReadonly}}
                 {{#if allowNull}}
-                    <button class="tr-select-editor-button-clear" {{action 'onClearValue' bubbles=false}} disabled="{{isDisabled}}" readonly="{{isReadonly}}"><span>&#10006;</span></button>
+                    <button class="tr-select-editor-button-clear" {{action 'onClearValue' bubbles=false}} disabled={{isDisabled}}><span>&#10006;</span></button>
                 {{/if}}
             {{/unless}}
             <button class="tr-select-editor-button-arrow" {{action 'onToggleState' bubbles=false}} disabled={{isDisabled}}><span>&#9660;</span></button>
