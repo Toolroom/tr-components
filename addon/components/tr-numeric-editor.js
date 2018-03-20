@@ -1,28 +1,36 @@
 import Ember from 'ember';
 import Editor from './tr-text-editor';
 import layout from '../templates/components/tr-numeric-editor';
+const { next } = Ember.run;
 
 export default Editor.extend({
+    layout,
+
     init: function() {
         this._super();
         this.setup();
     },
 
     setup: function() {
-        var value = this.get('value') || '',
+        var value = this.get('value'),
             fractionLength = this.get('fractionLength');
 
-        var editValueStr = value.toString().replace(',','.');
-        var editValue = (fractionLength > 0 ? Number.parseFloat(editValueStr) : Number.parseInt(editValueStr)) || 0;
+        if(!this.isNumericValue(value)) value = this.nullValue();
+
+        var editValueStr = value === null ? '' : value.toString().replace(',','.');
+        var editValue = (fractionLength > 0 ? Number.parseFloat(editValueStr) : Number.parseInt(editValueStr));
+        if(!this.isNumericValue(editValue)) editValue = this.nullValue();
 
         this._editValue = editValue;
 
-        var displayValue = editValue ? editValue.toLocaleString() : null;
+        var displayValue = this.isNumericValue(editValue) ? editValue.toLocaleString() : null;
         this.set('displayValue', displayValue);
         this.set('internalEditValue', displayValue);
     },
 
     _editValue: undefined,
+
+    allowNull: true,
 
     /**
      * Defines the minimum editValue
@@ -48,9 +56,11 @@ export default Editor.extend({
         var editValue = this.get('editValue'),
             fractionLength = this.get('fractionLength');
 
-        editValue = (fractionLength > 0 ? Number.parseFloat(editValue) : Number.parseInt(editValue)) || 0;
-        var editValueStr = editValue.toFixed(fractionLength);
-        editValue = (fractionLength > 0 ? Number.parseFloat(editValueStr) : Number.parseInt(editValueStr)) || 0;
+        editValue = (fractionLength > 0 ? Number.parseFloat(editValue) : Number.parseInt(editValue));
+        if(editValue === null || Number.isNaN(editValue)) editValue = this.nullValue();
+        var editValueStr = editValue === null ? null : editValue.toFixed(fractionLength);
+        editValue = (fractionLength > 0 ? Number.parseFloat(editValueStr) : Number.parseInt(editValueStr));
+        if(editValue === null || Number.isNaN(editValue)) editValue = this.nullValue();
 
         this.set('displayValue', editValue ? editValue.toLocaleString() : null);
     }),
@@ -63,7 +73,8 @@ export default Editor.extend({
             var fractionLength = this.get('fractionLength');
             value = value ? value.toString() : '';
             value = value.replace(',','.');
-            value = (fractionLength > 0 ? Number.parseFloat(value) : Number.parseInt(value)) || 0;
+            value = (fractionLength > 0 ? Number.parseFloat(value) : Number.parseInt(value));
+            if(value === null || Number.isNaN(value)) value = this.nullValue();
 
             this.set('value', value);
 
@@ -84,26 +95,32 @@ export default Editor.extend({
      * Synchronizes the editValue with the value
      */
     updateEditValueFromValue: Ember.observer('value', function() {
-        var value = this.get('value') || '',
+        var value = this.get('value'),
             fractionLength = this.get('fractionLength');
 
+        if(value === null || value === undefined) value = this.nullValue();
+
         var editValueStr = value.toString().replace(',','.');
-        var editValue = (fractionLength > 0 ? Number.parseFloat(editValueStr) : Number.parseInt(editValueStr)) || 0;
+        var editValue = (fractionLength > 0 ? Number.parseFloat(editValueStr) : Number.parseInt(editValueStr));
+        if(editValue === null || Number.isNaN(editValue)) editValue = this.nullValue();
 
         this.set('editValue', editValue);
         this.updateFromIsEditing();
     }),
 
-
+    isNumericValue(val) {
+        return val !== null && val !== undefined && !Number.isNaN(val);
+    },
 
     updateEditValueFromInternalEditValue: Ember.observer('internalEditValue', function() {
         if(!this.get('isEditing')) return;
         var internalEditValue = this.get('internalEditValue'),
-            internalEditValueStr = (internalEditValue ? internalEditValue.toString() : '').replace(',','.'),
+            internalEditValueStr = (this.isNumericValue(internalEditValue) ? internalEditValue.toString() : '').replace(',','.'),
             fractionLength = this.get('fractionLength');
 
-        var editValue = (fractionLength > 0 ? Number.parseFloat(internalEditValueStr) : Number.parseInt(internalEditValueStr)) || 0;
-        editValue = editValue.toFixed(fractionLength);
+        var editValue = (fractionLength > 0 ? Number.parseFloat(internalEditValueStr) : Number.parseInt(internalEditValueStr));
+        if(editValue === null || Number.isNaN(editValue)) editValue = this.nullValue();
+        editValue = editValue === null ? null : editValue.toFixed(fractionLength);
 
         this.set('editValue', editValue);
     }),
@@ -111,7 +128,10 @@ export default Editor.extend({
     updateFromIsEditing: Ember.observer('isEditing', function() {
         if(this.get('isEditing'))
         {
-            var editValue = (this.get('editValue') || '').toString()/*,
+            var editValue = this.get('editValue');
+            if(editValue === null || editValue === undefined) editValue = this.nullValue();
+            editValue = editValue.toString();
+                /*,
                 fractionLength = this.get('fractionLength');
 
             var editValueStr = editValue.toFixed(fractionLength);
@@ -186,7 +206,7 @@ export default Editor.extend({
 
             var numericPreview = (fractionLength > 0 ? Number.parseFloat(preview) : Number.parseInt(preview)) || null;*/
             var numericPreview = this._getPreviewValue(evt, char);
-            if(!numericPreview) {
+            if(numericPreview === null || numericPreview === undefined) {
                 return false;
             }
             if(numericPreview > this.get('maxValue')) return false;
@@ -208,9 +228,10 @@ export default Editor.extend({
     isValueValid: function(value, fixValueOnValidation) {
         var fractionLength = this.get('fractionLength'),
             min = this.get('minValue'),
-            max = this.get('maxValue');
+            max = this.get('maxValue'),
+            allowNull = this.get('allowNull');
 
-        value = value || '';
+        if(!this.isNumericValue(value)) value = this.nullValue();
 
         //Define allowed fraction separator on string input
         if(value.replace)
@@ -220,28 +241,49 @@ export default Editor.extend({
 
         var val = fractionLength > 0 ? Number.parseFloat(value) : Number.parseInt(value);
 
-        var high = val > max;
-        var low = val < min;
+        //if(val === null || Number.isNaN(val)) val = allowNull ? null : 0;
+        if(Number.isNaN(val)) val = null;
+
+        let high = val > max,
+            low = val < min,
+            nullIncident = !allowNull && val === null;
 
         //Fix value
         if(fixValueOnValidation) {
-            if(high) {
-                this.set('value', max);
-            } else if(low) {
-                this.set('value', min);
+            if(nullIncident) {
+                this.set('value', this.nullValue());
+            } else {
+                if(high) {
+                    this.set('value', max);
+                } else if(low) {
+                    this.set('value', min);
+                }
             }
         }
 
-        return !low && !high;
+        return !low && !high && !nullIncident;
     },
 
     validationMessage: null,
+
+    nullValue() {
+        if(this.get('allowNull')) return null;
+
+        let min = this.get('minValue'),
+            max = this.get('maxValue');
+
+        return 0 >= min && 0 <= max ? 0 : min
+    },
 
     focusOut: function() {
         if(!this.isValueValid(this.get('value'), true)) {
             this.set('value', this.get('minValue'));
         }
-        this.set('isEditing', false);
+        /*this.set('internalEditValue', null);
+        this.updateEditValueFromValue();
+        next(this, function() {
+            this.set('isEditing', false);
+        })*/
     },
 
     focusIn: function() {
