@@ -100,7 +100,7 @@ export default Editor.extend({
 
         if(value === null || value === undefined) value = this.nullValue();
 
-        var editValueStr = value.toString().replace(',','.');
+        var editValueStr = (value || '').toString().replace(',','.');
         var editValue = (fractionLength > 0 ? Number.parseFloat(editValueStr) : Number.parseInt(editValueStr));
         if(editValue === null || Number.isNaN(editValue)) editValue = this.nullValue();
 
@@ -130,7 +130,7 @@ export default Editor.extend({
         {
             var editValue = this.get('editValue');
             if(editValue === null || editValue === undefined) editValue = this.nullValue();
-            editValue = editValue.toString();
+            editValue = (editValue || '').toString();
                 /*,
                 fractionLength = this.get('fractionLength');
 
@@ -234,7 +234,7 @@ export default Editor.extend({
         if(!this.isNumericValue(value)) value = this.nullValue();
 
         //Define allowed fraction separator on string input
-        if(value.replace)
+        if(value && value.replace)
         {
             value = value.replace(",",".");
         }
