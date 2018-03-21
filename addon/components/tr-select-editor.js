@@ -258,7 +258,6 @@ export default Editor.extend(OutsideClick, {
     },
 
     _itemsDidChange: Ember.observer('items', function() {
-        debugger;
         this.onTextChanged();
     }),
 
