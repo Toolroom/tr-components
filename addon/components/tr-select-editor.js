@@ -10,7 +10,8 @@ export default Editor.extend(OutsideClick, {
     init: function() {
         this._super();
         this.on('didInsertElement', this, function() {
-            this.set('filteredItems', this.get('items'));
+            //this.set('filteredItems', this.get('items'));
+            this._itemsDidChange();
 
             if(this.get('selectedItem')) {
                 this._selectedItemChanged();
@@ -170,7 +171,6 @@ export default Editor.extend(OutsideClick, {
         //});
     }),
 
-
     /*** Exposed Events **/
     onSelectedItemChanged: null,
     onSelectedItemsChanged: null,
@@ -256,6 +256,11 @@ export default Editor.extend(OutsideClick, {
             this.set('filteredItems', all);
         }
     },
+
+    _itemsDidChange: Ember.observer('items', function() {
+        debugger;
+        this.onTextChanged();
+    }),
 
     updateSuggestedValue: function(text) {
         var value = this._getValue(this.get('suggestedItem'));
