@@ -44,8 +44,6 @@ export default Editor.extend(OutsideClick, {
     valueProperty: 'value',
 
     displayValue: Ember.computed('selectedItems', 'selectedItems.length', 'selectedItem', 'isMultiple', function() {
-        let valueProperty = this.get('valueProperty');
-
         if(this.get('isMultiple')) {
             let items = this.get('selectedItems'),
                 values = [];
@@ -53,15 +51,15 @@ export default Editor.extend(OutsideClick, {
             if(!items) return null;
 
             items.forEach(function(item) {
-                values.pushObject(item.get(valueProperty));
-            });
+                values.pushObject(this._getValue(item));
+            }, this);
             return values.toString();
         }
 
         let selectedItem = this.get('selectedItem');
         if(!selectedItem) return selectedItem;
 
-        return selectedItem.get(valueProperty);
+        return this._getValue(selectedItem);
     }),
 
     /*** UI PROPERTIES ***/
