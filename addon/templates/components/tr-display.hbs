@@ -9,7 +9,13 @@
             {{/if}}
         {{else}}
             {{#if value}}
-                {{value}}
+                {{#if (instance-of value 'Array')}}
+                    {{#each value as |item|}}
+                        {{!--join value ', '--}}
+                    {{/each}}
+                {{else}}
+                    {{value}}
+                {{/if}}
             {{else}}
                 <span class="input-placeholder">{{placeholder}}</span>
             {{/if}}
