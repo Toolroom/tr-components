@@ -29,12 +29,31 @@ export default Ember.Mixin.create({
         this.removeFocusOutsideListener();
     }),
 
+    ownElements: null,
+
+    _getOwnElements(me) {
+        let elements = this.get('ownElements') || [];
+        elements.push(me || this.$()[0]);
+        return elements;
+    },
+
+    _contains(target, me) {
+        let elements = this._getOwnElements(me);
+
+        for(let idx = 0; idx < elements.length; idx++) {
+            if(elements[idx].contains(target) || elements[idx] === target) return true;
+        }
+        return false;
+    },
+
     addClickOutsideListener: function(){
-        var el = this.$()[0],
-            self = this;
+        let self = this,
+            el = this.$()[0];
 
         this._click_fun = function(e){
-            if (el.contains(e.target) || (self.ignoreDisconnectedClickTargets && e.target.isConnected === false)) {
+            if(self.ignoreDisconnectedClickTargets && e.target.isConnected === false) return;
+
+            if (self._contains(e.target, el)) {
                 //Trigger only when entering
                 if(self.triggerAlways || !self._clickIsInside)
                 {
@@ -58,12 +77,11 @@ export default Ember.Mixin.create({
     },
 
     addFocusOutsideListener: function(){
-
-        var el = this.$()[0],
-            self = this;
+        let self = this,
+            el = this.$()[0];
 
         this._focus_out_fun = function(e){
-            if (el.contains(e.target)){
+            if (self._contains(e.target, el)){
                 if(self.triggerAlways || !self._focusIsInside)
                 {
                     self.focusInside(e);
@@ -86,7 +104,7 @@ export default Ember.Mixin.create({
     },
 
     addFocusListener: function(){
-        var el = this.$()[0],
+        let elements = this._getOwnElements(),
             self = this;
 
         this._focus_fun = function(e){
@@ -95,12 +113,21 @@ export default Ember.Mixin.create({
             self.focusInside(e);
         };
 
-        el.addEventListener('focusin', this._focus_fun);
+        for(let idx = 0; idx < elements.length; idx++) {
+            elements[idx].addEventListener('focusin', this._focus_fun);
+        }
+
+        //el.addEventListener('focusin', this._focus_fun);
     },
 
     removeFocusListener: function(){
-        var el = this.$()[0];
+        //var el = this.$()[0];
+        //el.removeEventListener('focusin', this._focus_fun);
 
-        el.removeEventListener('focusin', this._focus_fun);
+        let elements = this._getOwnElements();
+
+        for(let idx = 0; idx < elements.length; idx++) {
+            elements[idx].removeEventListener('focusin', this._focus_fun);
+        }
     },
 });
