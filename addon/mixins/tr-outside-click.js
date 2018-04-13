@@ -11,6 +11,7 @@ export default Ember.Mixin.create({
     focusOutside() {},
 
     triggerAlways: false,
+    ignoreDisconnectedClickTargets: true,
 
     _clickIsInside: false,
     _focusIsInside: false,
@@ -33,7 +34,7 @@ export default Ember.Mixin.create({
             self = this;
 
         this._click_fun = function(e){
-            if (el.contains(e.target)){
+            if (el.contains(e.target) || (self.ignoreDisconnectedClickTargets && e.target.isConnected === false)) {
                 //Trigger only when entering
                 if(self.triggerAlways || !self._clickIsInside)
                 {
