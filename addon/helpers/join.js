@@ -1,10 +1,17 @@
 import { helper } from '@ember/component/helper';
 
-export function join(params/*, hash*/) {
-    if(params[0] instanceof Array) {
-        return params[0].join(params[1], ", ");
+export function join(params, hash) {
+    debugger;
+    let value = params[0],
+        separator = hash.separator || params[1] || ', ',
+        path = hash.path || params[2] || 'name'
+
+    if(value instanceof Array) {
+        return value.join(separator);
+    } else if(value instanceof Ember.ArrayProxy) {
+        return value.getEach(path).join(separator);
     }
-    return params[0];
+    return value.toString();
 }
 
 export default helper(join);

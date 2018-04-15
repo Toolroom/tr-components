@@ -20,5 +20,9 @@ export default Editor.extend({
     /**
      * The value placeholder
      */
-    placeholder: null
+    placeholder: null,
+
+    path: null,
+
+    separator: null
 });

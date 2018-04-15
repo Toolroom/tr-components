@@ -10,9 +10,7 @@
         {{else}}
             {{#if value}}
                 {{#if (instance-of value 'Array')}}
-                    {{#each value as |item|}}
-                        {{!--join value ', '--}}
-                    {{/each}}
+                    {{join value separator=separator path=path}}
                 {{else}}
                     {{value}}
                 {{/if}}

@@ -1,11 +1,11 @@
 import { helper } from '@ember/component/helper';
 
-export function split(params/*, hash*/) {
+export function split(params, hash) {
   let str = params[0],
-    separator = params.separator || params[1],
-    limit = params.limit || params[2] || undefined,
-    removeEmpty = params.removeEmpty || params[3] || false,
-    removeWhitespace = params.removeWhitespace || params[4] || false;
+    separator = hash.separator || params[1],
+    limit = hash.limit || params[2] || undefined,
+    removeEmpty = hash.removeEmpty || params[3] || false,
+    removeWhitespace = hash.removeWhitespace || params[4] || false;
 
   if(str == null) return null;
 
