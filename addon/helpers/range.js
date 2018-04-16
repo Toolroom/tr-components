@@ -1,9 +1,9 @@
 import { helper } from '@ember/component/helper';
 
-export function range(params/*, hash*/) {
+export function range(params, hash) {
   let first = params[0] || 0,
       last = params[1] || 0,
-      inclusive = params[2] || false,
+      inclusive = hash.inclusive || params[2] || false,
       target = [];
 
   if(inclusive) {
@@ -20,7 +20,7 @@ export function range(params/*, hash*/) {
     }
   }
 
-  return params;
+  return target;
 }
 
 export default helper(range);

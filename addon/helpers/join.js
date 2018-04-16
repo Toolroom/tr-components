@@ -1,7 +1,6 @@
 import { helper } from '@ember/component/helper';
 
 export function join(params, hash) {
-    debugger;
     let value = params[0],
         separator = hash.separator || params[1] || ', ',
         path = hash.path || params[2] || 'name'
