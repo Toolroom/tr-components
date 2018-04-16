@@ -1,1 +1,1 @@
-export { default, range } from '@toolroom/tr-ember-components/helpers/range';
+export { default, range } from 'tr-ember-components/helpers/range';
