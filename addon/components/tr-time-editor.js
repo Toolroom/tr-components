@@ -4,7 +4,13 @@ import layout from '../templates/components/tr-time-editor';
 
 export default Editor.extend({
     layout,
-    _formatExpression: /^([0-9]{1,4})(?:(?::)([0-9]{1,2}))?(?:$|(?:(?::)([0-9]{1,2})$)?)/,
+    _formatExpression: Ember.computed('allowSeconds', function() {
+        if(this.get('allowSeconds')) {
+            return /^([0-9]{1,4})(?:(?::)([0-9]{1,2}))?(?:$|(?:(?::)([0-9]{1,2})$)?)/;
+        }
+
+        return /^([0-9]{1,4})(?:(?::)([0-9]{1,2}))?/;
+    }),
     init: function() {
         this._super();
         this.setup();
@@ -29,16 +35,17 @@ export default Editor.extend({
 
         var result = this._getEmptyObject();
 
-        var regexp = this._formatExpression,
-            matches = str.match(regexp);
+        var regexp = this.get('_formatExpression'),
+            matches = str.match(regexp),
+            allowSeconds = this.get('allowSeconds');
 
-        if(!matches || matches.length != 4 || !matches[0] || !matches[1]) {
+        if(!matches || ((allowSeconds && matches.length != 4) || matches.length != 3) || !matches[0] || !matches[1]) {
             return this._emptyStringValue;
         }
 
         result.hours = Number.parseInt(matches[1] || 0);
         result.minutes = Number.parseInt(matches[2] || 0) || 0;
-        result.seconds = Number.parseInt(matches[3] || 0) || 0;
+        result.seconds = allowSeconds ? Number.parseInt(matches[3] || 0) || 0 : 0;
         return result;
     },
     _getStringValue: function() {
@@ -46,7 +53,13 @@ export default Editor.extend({
             return null;
         }
         
-        return `${this._pad(this._editObject.hours)}:${this._pad(this._editObject.minutes)}:${this._pad(this._editObject.seconds)}`;
+        let str = `${this._pad(this._editObject.hours)}:${this._pad(this._editObject.minutes)}`;
+
+        if(this.get('allowSeconds')) {
+            str += ':' + this._pad(this._editObject.seconds);
+        }
+
+        return str;
     },
     _pad: function(str, minLength) {
         minLength = minLength || 2;
@@ -65,6 +78,7 @@ export default Editor.extend({
     },
 
     isTime: true,
+    allowSeconds: false,
 
     _dateValue: null,
     dateValue: Ember.computed({
@@ -94,7 +108,11 @@ export default Editor.extend({
             this._dateValue = date;
 
             if(date) {
-                this.set('value', `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
+                let str = `${date.getHours()}:${date.getMinutes()}`;
+                if(this.get('allowSeconds')) {
+                    str += ':' + date.getSeconds();
+                }
+                this.set('value', str);
             } else {
                 this.set('value', null);
             }
@@ -166,7 +184,7 @@ export default Editor.extend({
     },
 
     isValueValid: function(value) {
-        if(!this._formatExpression.test(value)) {
+        if(!this.get('_formatExpression').test(value)) {
             return false;
         }
 
@@ -254,7 +272,7 @@ export default Editor.extend({
         var displayValue = (this.$('input').val() || '');
         var preview = [displayValue.slice(0, selection.start), str, displayValue.slice(selection.end)].join('');
 
-        return this._formatExpression.test(preview) ? preview : null;
+        return this.get('_formatExpression').test(preview) ? preview : null;
     },
 
     _ctrlDown: false,
