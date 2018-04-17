@@ -6,6 +6,9 @@ export function compare(params/*, hash*/) {
             op = params[1],
             v2 = params[2];
 
+        if(v1 instanceof Date) v1 = v1.getTime();
+        if(v2 instanceof Date) v2 = v2.getTime();
+
         switch(op) {
             case "==":
                 return v1 == v2;
