@@ -63,7 +63,7 @@ export default Ember.Component.extend({
         this.$('input').focus();
     }).on('didInsertElement'),
 
-    _updateTranslation: Ember.observer('translationKey', function () {
+    _updateTranslation: Ember.observer('translationKey', 'i18n.locale', function () {
         let translationKey = this.get('translationKey'),
             i18n = this.get('i18n');
 

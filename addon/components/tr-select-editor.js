@@ -43,7 +43,7 @@ export default Editor.extend(OutsideClick, {
     keyProperty: 'key',
     valueProperty: 'value',
 
-    displayValue: Ember.computed('selectedItems', 'selectedItems.length', 'selectedItem', 'isMultiple', function() {
+    displayValue: Ember.computed('selectedItems', 'selectedItems.length', 'selectedItem', 'isMultiple', 'i18n.locale', function() {
         if(this.get('isMultiple')) {
             let items = this.get('selectedItems'),
                 values = [];
