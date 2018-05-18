@@ -7,12 +7,14 @@
 {{/if}}
 
 {{#if showImageUpload}}
-    {{#file-upload name="photos"
+    {{#file-upload name=elementId
         accept="image/*"
         multiple=false
         onfileadd=(action "uploadFile") class="tr-image-upload-placeholder"}}
         <i class="fa fa-upload fa-2x"></i>
     {{/file-upload}}
+{{/if}}
+{{#if showImageDelete}}
     {{#if image}}
         <span class="tr-image-upload-image-remove" {{action 'deleteFile' image bubbles=false}}><i class="fa fa-trash-o"></i></span>
     {{/if}}

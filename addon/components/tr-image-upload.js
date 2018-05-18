@@ -3,7 +3,7 @@ import layout from '../templates/components/tr-image-upload';
 
 export default Ember.Component.extend({
     layout,
-    
+
     classNames: 'tr-image-upload',
 
     image: null,
@@ -12,6 +12,7 @@ export default Ember.Component.extend({
     }),
     imagePlaceholder: null,
     showImageUpload: false,
+    showImageDelete: false,
     showImagePlaceholder: true,
 
     onUpload: null,
@@ -21,14 +22,18 @@ export default Ember.Component.extend({
         uploadFile(file) {
             var onUpload = this.get('onUpload'),
                 showImageUpload = this.get('showImageUpload');
+            if (!onUpload) return;
             if(showImageUpload) {
                 onUpload(file);
             }
         },
         deleteFile(image) {
-            var onDelete= this.get('onDelete');
+            var onDelete= this.get('onDelete'),
+                showImageDelete = this.get('showImageDelete');
             if(!onDelete) return;
-            onDelete(image);
+            if(showImageDelete) {
+              onDelete(image);
+            }
         }
     }
 });
