@@ -7,7 +7,7 @@ export function startsWith(params/*, hash*/) {
 
     if(!base.startsWith)
     {
-        return base.indexOf(containedStr) >= 0;
+        return base.indexOf(containedStr) === 0;
     }
 
     return base.startsWith(containedStr);
