@@ -128,12 +128,6 @@ export default Editor.extend(OutsideClick, {
     popoutPrimaryText: 'Ok',
 
     /*** OBSERVER ***/
-    _itemsChanged: Ember.observer('items', 'items.@each', function() {
-        /*if(this.get('label') == "Reinigungsgruppe") {
-            debugger;
-        }*/
-    }),
-
     _selectedItemChanged: Ember.observer('selectedItem', function() {
         //next(this, function() {
             this.set('selectedKey', this._getKey(this.get('selectedItem')));

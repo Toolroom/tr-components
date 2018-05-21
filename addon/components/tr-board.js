@@ -9,6 +9,7 @@ export default Ember.Component.extend({
     
     _gridSize: 168,
     _gridSpace: 8,
+    _maxTileSize: 4,
     _id: null,
 
     id: Ember.computed({
@@ -45,6 +46,40 @@ export default Ember.Component.extend({
             self.set('isLoading', false);
         });
     },
+
+    refreshScreen: Ember.observer('data', 'isEditing', function() {
+        var stringData = this.get('data.data.value'),
+            maxX = 0,
+            maxY = 0;
+
+        if(!stringData) return;
+
+        var data = JSON.parse(stringData);
+
+        for(var property in data) {
+            if (data.hasOwnProperty(property)) {
+                var current = data[property],
+                    currentTotalX = current.position.x + current.position.width,
+                    currentTotalY = current.position.y + current.position.height;
+
+                if(currentTotalX > maxX) maxX = currentTotalX;
+                if(currentTotalY > maxY) maxY = currentTotalY;
+            }
+        }
+
+        var addonSize =this.get('isEditing') ? this._maxTileSize : 0;
+
+        var w = (maxX + addonSize) * this._gridSize + this._gridSpace,
+            h = (maxY + addonSize) * this._gridSize + this._gridSpace;
+
+        /*this.setProperties({
+            width: w,
+            height: h
+        });*/
+        this.$()
+            .css('width', w)
+            .css('height', h);
+    }),
 
     actions: {
         doAddWidget() {
