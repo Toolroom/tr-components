@@ -1,0 +1,20 @@
+{{#tr-editor as |e|}}
+    {{#e.label}}
+        {{tr-error-tooltip errors=errors}}
+        {{label}}
+        {{tr-info-tooltip title=title content=info}}
+    {{/e.label}}
+    {{#if prefix}}
+        {{#e.prefix}}
+            {{tr-string-html prefix}}
+        {{/e.prefix}}
+    {{/if}}
+    {{#e.content}}
+        {{textarea value=value placeholder=placeholder disabled=isDisabled readonly=isReadonly autocomplete=autocomplete visible=isVisible maxlength=maxlength}}
+    {{/e.content}}
+    {{#if postfix}}
+        {{#e.postfix}}
+            {{tr-string-html postfix}}
+        {{/e.postfix}}
+    {{/if}}
+{{/tr-editor}}
