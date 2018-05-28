@@ -4,7 +4,7 @@ import layout from '../templates/components/tr-text-editor';
 
 export default Editor.extend({
     layout,
-    translationProperties: ['placeholder'],
+    i18nProperties: ['placeholder'],
     classNames: 'tr-text-editor',
 
     placeholder: null,

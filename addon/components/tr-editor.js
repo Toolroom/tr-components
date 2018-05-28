@@ -3,7 +3,7 @@ import layout from '../templates/components/tr-editor';
 
 export default Ember.Component.extend({
     layout,
-    concatenatedProperties: ['translationProperties'],
+    concatenatedProperties: ['i18nProperties'],
 
     i18n: Ember.inject.service(),
 
@@ -19,8 +19,8 @@ export default Ember.Component.extend({
     prefix: null,
     postfix: null,
 
-    translationKey: null,
-    translationProperties: ['label', 'title', 'info', 'prefix', 'postix'],
+    i18nKey: null,
+    i18nProperties: ['label', 'title', 'info', 'prefix', 'postfix'],
 
     isDisabled: false,
     isReadonly: false,
@@ -63,21 +63,21 @@ export default Ember.Component.extend({
         this.$('input').focus();
     }).on('didInsertElement'),
 
-    _updateTranslation: Ember.observer('translationKey', 'i18n.locale', function () {
-        let translationKey = this.get('translationKey'),
+    _updateI18n: Ember.observer('i18nKey', 'i18n.locale', function () {
+        let i18nKey = this.get('i18nKey'),
             i18n = this.get('i18n');
 
-        if (!translationKey || !i18n) return;
+        if (!i18nKey || !i18n) return;
 
-        let translationProperties = this.get('translationProperties') || [];
+        let i18nProperties = this.get('i18nProperties') || [];
 
-        translationProperties.forEach(function(propertyName) {
-            this._updateTranslationForPropertyName(i18n, translationKey, propertyName);
+        i18nProperties.forEach(function(propertyName) {
+            this._updateI18nForPropertyName(i18n, i18nKey, propertyName);
         }, this);
     }).on('didInsertElement'),
 
-    _updateTranslationForPropertyName: function(i18n, translationKey, propertyName) {
-        let translation = i18n.t(translationKey + '.' + propertyName, { default: ['editor.default.' + propertyName, 'editor.default.null'] });
+    _updateI18nForPropertyName: function(i18n, i18nKey, propertyName) {
+        let translation = i18n.t(i18nKey + '.' + propertyName, { default: ['editor.default.' + propertyName, 'editor.default.null'] });
         if(translation.toString() !== '\\null\\') this.set(propertyName, translation);
     }
 });

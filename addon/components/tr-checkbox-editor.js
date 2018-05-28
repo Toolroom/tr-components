@@ -4,7 +4,7 @@ import layout from '../templates/components/tr-checkbox-editor';
 
 export default Editor.extend({
     layout,
-    translationProperties: ['placeholder'],
+    i18nProperties: ['placeholder'],
 
     classNames: 'tr-checkbox-editor',
     classNameBindings: ['_checkStateClass', '_placeholderStateClass'],

@@ -5,7 +5,7 @@ import layout from '../templates/components/tr-select-editor';
 
 export default Editor.extend(OutsideClick, {
     layout,
-    translationProperties: ['placeholder'],
+    i18nProperties: ['placeholder'],
 
     init: function() {
         this._super();
