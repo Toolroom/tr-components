@@ -1,0 +1,11 @@
+<div class="tr-blade-wrapper">
+    <div class="tr-blade-pane theme-background-lowest">
+        {{yield (hash pane=(component 'tr-contentpresenter'))}}
+    </div>
+    <div class="tr-blade-content">
+        {{yield (hash content=(component 'tr-contentpresenter'))}}
+    </div>
+    <div class="tr-blade-nav-back" {{action 'navigateBack' (hash content)}}>
+        <i class="fa fa-chevron-circle-left"></i>
+    </div>
+</div>

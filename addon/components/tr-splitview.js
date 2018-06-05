@@ -14,6 +14,9 @@ export default Ember.Component.extend({
 
     size: 'small',
 
+    enableBackdrop: false,
+    enableToggle: false,
+
     panel: null,
     content: null,
 

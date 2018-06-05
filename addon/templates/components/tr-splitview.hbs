@@ -1,8 +1,18 @@
 <div class="tr-splitview-wrapper">
+    {{#if enableBackdrop}}
+    <div class="tr-splitview-backdrop">
+        {{yield (hash backdrop=(component 'tr-contentpresenter'))}}
+    </div>
+    {{/if}}
     <div class="tr-splitview-pane theme-background-lowest">
         {{yield (hash pane=(component 'tr-contentpresenter'))}}
     </div>
     <div class="tr-splitview-content">
         {{yield (hash content=(component 'tr-contentpresenter'))}}
     </div>
+    {{#if enableToggle}}
+    <div class="tr-splitview-toggle">
+        {{yield (hash toggle=(component 'tr-contentpresenter'))}}
+    </div>
+    {{/if}}
 </div>
