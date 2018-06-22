@@ -1,6 +1,6 @@
 {
   "name": "@toolroom/tr-ember-components",
-  "version": "0.0.32",
+  "version": "0.0.33",
   "description": "Toolroom UI Components for Ember.",
   "keywords": [
     "ember-addon",
@@ -46,7 +46,8 @@
     "ember-ui-sortable": "^0.3.3",
     "eslint-plugin-ember": "^5.0.0",
     "eslint-plugin-node": "^5.2.1",
-    "highcharts": "^6.0.4",
+    "ember-highcharts": "^1.0.0",
+    "highcharts": "^6.1.0",
     "jquery-ui": "^1.12.1",
     "kalel": "^1.0.1",
     "loader.js": "^4.2.3"

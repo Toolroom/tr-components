@@ -4,10 +4,10 @@ import layout from '../../templates/components/widgets/tr-chart';
 
 export default Widget.extend({
     layout,
-    
+
     chartOptions: null,
     content: null,
-    mode: null,
+    mode: undefined,
     theme: {
         colors: ['#009fe3', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4'],
         chart: {
