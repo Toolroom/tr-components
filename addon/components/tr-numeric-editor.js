@@ -62,7 +62,7 @@ export default Editor.extend({
         editValue = (fractionLength > 0 ? Number.parseFloat(editValueStr) : Number.parseInt(editValueStr));
         if(editValue === null || Number.isNaN(editValue)) editValue = this.nullValue();
 
-        this.set('displayValue', editValue ? editValue.toLocaleString() : null);
+        this.set('displayValue',  this.isNumericValue(editValue) ? editValue.toLocaleString() : null);
     }),
 
     /**
@@ -71,7 +71,7 @@ export default Editor.extend({
     editValue: Ember.computed('value', {
         set(sender, value) {
             var fractionLength = this.get('fractionLength');
-            value = value ? value.toString() : '';
+            value = value != null && value !== undefined ? value.toString() : '';
             value = value.replace(',','.');
             value = (fractionLength > 0 ? Number.parseFloat(value) : Number.parseInt(value));
             if(value === null || Number.isNaN(value)) value = this.nullValue();
@@ -95,13 +95,13 @@ export default Editor.extend({
      * Synchronizes the editValue with the value
      */
     updateEditValueFromValue: Ember.observer('value', function() {
-        var value = this.get('value'),
+        let value = this.get('value'),
             fractionLength = this.get('fractionLength');
 
         if(value === null || value === undefined) value = this.nullValue();
 
-        var editValueStr = (value || '').toString().replace(',','.');
-        var editValue = (fractionLength > 0 ? Number.parseFloat(editValueStr) : Number.parseInt(editValueStr));
+        let editValueStr = (value === null ? '' : value).toString().replace(',','.');
+        let editValue = (fractionLength > 0 ? Number.parseFloat(editValueStr) : Number.parseInt(editValueStr));
         if(editValue === null || Number.isNaN(editValue)) editValue = this.nullValue();
 
         this.set('editValue', editValue);
@@ -130,7 +130,7 @@ export default Editor.extend({
         {
             var editValue = this.get('editValue');
             if(editValue === null || editValue === undefined) editValue = this.nullValue();
-            editValue = (editValue || '').toString();
+            editValue = (editValue === null ? '' : editValue).toString();
                 /*,
                 fractionLength = this.get('fractionLength');
 
@@ -151,7 +151,8 @@ export default Editor.extend({
 
     isKeyValid: function(evt) {
         evt = (evt) ? evt : window.event;
-        var strVal = (this.get('editValue') || '').toString().replace(',','.'),
+        var editValue = this.get('editValue'),
+            strVal = (editValue === null ? '' : editValue).toString().replace(',','.'),
             fractionPosition = strVal.indexOf('.'),
             fractionLength = this.get('fractionLength'),
             charCode = (evt.which) ? evt.which : evt.keyCode,
@@ -366,7 +367,7 @@ export default Editor.extend({
         }
 
         var numericPreview = (fractionLength > 0 ? Number.parseFloat(preview) : Number.parseInt(preview));
-        return typeof(numericPreview) == 'number' && !(isNaN(numericPreview)) ? numericPreview : null;
+        return typeof(numericPreview) === 'number' && !(isNaN(numericPreview)) ? numericPreview : null;
     },
 
     _ctrlDown: false,
