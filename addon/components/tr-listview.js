@@ -3,13 +3,18 @@ import layout from '../templates/components/tr-listview';
 
 export default Ember.Component.extend({
     layout,
-    
+
     classNames: 'tr-listview',
 
     /**
      * Source for items to show
      */
     items: null,
+
+    /**
+     * Notifies that the list is currently busy
+     */
+    isBusy: false,
 
     /**
      * Name of the route to navigate to on click.

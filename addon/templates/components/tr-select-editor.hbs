@@ -54,6 +54,9 @@
                 {{/if}}
             {{/unless}}
             <button class="tr-select-editor-button-arrow" {{action 'onToggleState' bubbles=false}} disabled={{isDisabled}}><span>&#9660;</span></button>
+            {{#if isBusy}}
+                {{tr-text-loader}}
+            {{/if}}
         {{/tr-button-editor}}
     {{/if}}
     <!--<div class="tr-select-editor-buttons">-->

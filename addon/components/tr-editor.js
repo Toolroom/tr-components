@@ -27,6 +27,29 @@ export default Ember.Component.extend({
     isVisible: true,
     autocomplete: null,
 
+    isBusy: false,
+    _isBusy: Ember.computed('isBusy', 'busyKeys', function(){
+        let keys = this.get('busyKeys'),
+            isBusy = this.get('isBusy');
+        console.log(keys && keys.get('length') > 0);
+        return isBusy || (keys && keys.get('length') > 0);
+    }),
+    busyKeys: [],
+
+    setBusy(busyKey, isBusy) {
+        let keys = this.get('busyKeys');
+        if(isBusy) {
+            if(!keys || keys.indexOf(busyKey) === -1) return;
+            keys.removeObject(busyKey);
+        } else {
+            if(keys && keys.indexOf(busyKey) > -1) return;
+            keys.pushObject(busyKey);
+        }
+
+        if(keys && keys.indexOf(busyKey) > -1) return;
+        keys.pushObject(busyKey);
+    },
+
     isDisabledOrReadonly: Ember.computed('isDisabled', 'isReadonly', function () {
         return this.get('isDisabled') || this.get('isReadonly');
     }),
@@ -77,7 +100,10 @@ export default Ember.Component.extend({
     }).on('didInsertElement'),
 
     _updateI18nForPropertyName: function(i18n, i18nKey, propertyName) {
-        let translation = i18n.t(i18nKey + '.' + propertyName, { default: ['editor.default.' + propertyName, 'editor.default.null'] });
+        let translation = null;
+        if(Ember.isPresent(propertyName)) {
+            translation = i18n.t(i18nKey + '.' + propertyName, { default: ['editor.default.' + propertyName, 'editor.default.null'] });
+        }
         if(translation.toString() !== '\\null\\') this.set(propertyName, translation);
     }
 });

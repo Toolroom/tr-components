@@ -2,24 +2,30 @@
     {{yield (hash header=(component 'tr-sticky-header'))}}
     {{yield (hash menu=(component 'tr-container'))}}
 
-    {{#if items}}
-        <ul class="tr-listview-items">
-            {{#each _items as |item|}}
-                {{#if linkRouteName}}
-                    {{!-- Enable .active on the li element --}}
-                    {{#link-to linkRouteName item.id current-when=linkRouteCurrentWhen tagName="li" href=false class="tr-listview-item" classNameBindings="itemClass"}}
-                        {{#link-to linkRouteName item.id}}
-                            {{yield (hash data=item.item itemTemplate=(component 'tr-container'))}}
+    <div style="position: relative;">
+        {{#if items}}
+            <ul class="tr-listview-items">
+                {{#each _items as |item|}}
+                    {{#if linkRouteName}}
+                        {{!-- Enable .active on the li element --}}
+                        {{#link-to linkRouteName item.id current-when=linkRouteCurrentWhen tagName="li" href=false class="tr-listview-item" classNameBindings="itemClass"}}
+                            {{#link-to linkRouteName item.id}}
+                                {{yield (hash data=item.item itemTemplate=(component 'tr-container'))}}
+                            {{/link-to}}
                         {{/link-to}}
-                    {{/link-to}}
-                {{else}}
-                    <li class="tr-listview-item {{itemClass}} {{if (tr-eq item selectedItem) 'active'}}" {{action "select" item.item}}>
-                        {{yield (hash data=item.item itemTemplate=(component 'tr-container'))}}
-                    </li>
-                {{/if}}
-            {{/each}}
-        </ul>
-    {{else}}
-        {{yield (hash empty=(component 'tr-container'))}}
-    {{/if}}
+                    {{else}}
+                        <li class="tr-listview-item {{itemClass}} {{if (tr-eq item selectedItem) 'active'}}" {{action "select" item.item}}>
+                            {{yield (hash data=item.item itemTemplate=(component 'tr-container'))}}
+                        </li>
+                    {{/if}}
+                {{/each}}
+            </ul>
+        {{else}}
+            {{yield (hash empty=(component 'tr-container' classNames='tr-listview-empty'))}}
+        {{/if}}
+
+        {{#if isBusy}}
+            {{yield (hash busy=(component 'tr-container' classNames='tr-listview-busy'))}}
+        {{/if}}
+    </div>
 {{/tr-scroll-panel}}

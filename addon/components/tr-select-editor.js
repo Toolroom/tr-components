@@ -43,7 +43,7 @@ export default Editor.extend(OutsideClick, {
     keyProperty: 'key',
     valueProperty: 'value',
 
-    displayValue: Ember.computed('selectedItems', 'selectedItems.length', 'selectedItem', 'isMultiple', 'i18n.locale', function() {
+    displayValue: Ember.computed('selectedItems', 'selectedItems.length', 'selectedItem', 'selectedItem.isFulfilled', 'isMultiple', 'i18n.locale', function() {
         if(this.get('isMultiple')) {
             let items = this.get('selectedItems'),
                 values = [];
@@ -58,6 +58,10 @@ export default Editor.extend(OutsideClick, {
 
         let selectedItem = this.get('selectedItem');
         if(!selectedItem) return selectedItem;
+
+        let isBusy = selectedItem.then && !selectedItem.isFulfilled;
+        this.setBusy('displayValue', isBusy);
+        if(isBusy) return null;
 
         return this._getValue(selectedItem);
     }),
