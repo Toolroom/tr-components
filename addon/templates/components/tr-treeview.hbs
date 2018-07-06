@@ -3,10 +3,10 @@
         tagName='li'
         class="tr-treeview-item" data-item-id=(get item 'id')
         routeName=(mut routeName) item=item isSorting=isSorting enableSorting=enableSorting showPath=showPath
-        onToggle=(action 'toggle') }}
+        onToggle=(action 'toggle') onCustomAction=(action 'customAction') }}
         {{#if (get item isExpandedPropertyName)}}
             {{#if (get item hasAnyChildItemPropertyName)}}
-                {{#tr-treeview model=item routeName=(mut routeName) onToggle=onToggle
+                {{#tr-treeview model=item routeName=(mut routeName) onToggle=onToggle onCustomAction=onCustomAction
                     enableSorting=enableSorting onStartSorting=onStartSorting onUpdateSorting=onUpdateSorting onStopSorting=onStopSorting
                     childItemsPropertyName=childItemsPropertyName isBusyPropertyName=isBusyPropertyName
                     isExpandedPropertyName=isExpandedPropertyName

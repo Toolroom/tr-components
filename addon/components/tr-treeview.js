@@ -90,6 +90,9 @@ export default Ember.Component.extend({
         toggle (item){
             this.sendAction('onToggle', item);
         },
+        customAction (item){
+            this.sendAction('onCustomAction', item);
+        },
         startSorting (item, index){
             if(!this.get('enableSorting')) return;
             this.sendAction('onStartSorting', item, index);
