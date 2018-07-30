@@ -4,9 +4,10 @@
     {{/tr-image-upload}}
 {{/if}}
 <div class="tr-sticky-header-content">
-    <h2>{{header}}</h2>
+    {{#if header}}<h2>{{header}}</h2>{{/if}}
     {{#if subheader}}
         <label>{{subheader}}</label>
     {{/if}}
+    {{yield (hash content=(component 'tr-contentpresenter'))}}
 </div>
 {{yield (hash menu=(component 'tr-menubar'))}}
