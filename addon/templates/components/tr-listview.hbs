@@ -1,7 +1,7 @@
 {{#tr-scroll-panel autohide=scrollbarAutohide}}
     {{yield (hash header=(component 'tr-sticky-header'))}}
     {{yield (hash menu=(component 'tr-container'))}}
-
+    {{yield (hash itemsHeader=(component 'tr-container' classNames='tr-listview-items-header'))}}
     <div style="position: relative;">
         {{#if items}}
             <ul class="tr-listview-items">
@@ -28,4 +28,5 @@
             {{yield (hash busy=(component 'tr-container' classNames='tr-listview-busy'))}}
         {{/if}}
     </div>
+    {{yield (hash itemsFooter=(component 'tr-container' classNames='tr-listview-items-footer'))}}
 {{/tr-scroll-panel}}
