@@ -1,3 +1,11 @@
+{{!-- Required to fix async binding issues --}}
+<ul style="display:none;">
+    {{#each selectedItems as |selectedItem|}}
+        <li>-{{selectedItem.isLoading}}</li>
+    {{/each}}
+</ul>
+
+
 {{#if (tr-eq style 'flat')}}
     {{#tr-label}}
         {{yield (hash label=(component 'tr-contentpresenter'))}}
