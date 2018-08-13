@@ -6,7 +6,7 @@ export default Ember.Component.extend(OutsideClick, {
     layout,
     text: null,
     classNames: 'tr-submenu tr-editor',
-    
+
     isOpen: false,
 
     open: function() {
@@ -21,9 +21,20 @@ export default Ember.Component.extend(OutsideClick, {
     clickOutside() {
         this.close();
     },
-    
+
+    onClick: null,
+
     actions: {
-        click() {
+        onClick() {
+            let click = this.get('onClick');
+            if(click)
+            {
+                click();
+            } else {
+                this.set('isOpen', !this.get('isOpen'));
+            }
+        },
+        onToggleState() {
             this.set('isOpen', !this.get('isOpen'));
         }
     }
