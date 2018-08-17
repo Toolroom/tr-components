@@ -10,12 +10,16 @@
                         {{!-- Enable .active on the li element --}}
                         {{#link-to linkRouteName item.id current-when=linkRouteCurrentWhen tagName="li" href=false class="tr-listview-item" classNameBindings="itemClass"}}
                             {{#link-to linkRouteName item.id}}
-                                {{yield (hash data=item.item itemTemplate=(component 'tr-container'))}}
+                                <div class="tr-listview-item-content">
+                                    {{yield (hash data=item.item itemTemplate=(component 'tr-container'))}}
+                                </div>
                             {{/link-to}}
                         {{/link-to}}
                     {{else}}
                         <li class="tr-listview-item {{itemClass}} {{if (tr-eq item selectedItem) 'active'}}" {{action "select" item.item}}>
-                            {{yield (hash data=item.item itemTemplate=(component 'tr-container'))}}
+                            <div class="tr-listview-item-content">
+                                {{yield (hash data=item.item itemTemplate=(component 'tr-container'))}}
+                            </div>
                         </li>
                     {{/if}}
                 {{/each}}
