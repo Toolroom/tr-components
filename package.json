@@ -1,6 +1,6 @@
 {
   "name": "@toolroom/tr-ember-components",
-  "version": "0.0.43",
+  "version": "0.0.44",
   "description": "Toolroom UI Components for Ember.",
   "keywords": [
     "ember-addon",
@@ -40,13 +40,14 @@
     "ember-cli-uglify": "^2.0.0",
     "ember-disable-prototype-extensions": "^1.1.2",
     "ember-export-application-global": "^2.0.0",
+    "ember-highcharts": "^1.0.0",
     "ember-load-initializers": "^1.0.0",
+    "ember-qrcode-shim": "^0.3.0",
     "ember-resolver": "^4.0.0",
     "ember-source": "~2.18.0",
     "ember-ui-sortable": "^0.3.3",
     "eslint-plugin-ember": "^5.0.0",
     "eslint-plugin-node": "^5.2.1",
-    "ember-highcharts": "^1.0.0",
     "highcharts": "^6.1.0",
     "jquery-ui": "^1.12.1",
     "kalel": "^1.0.1",

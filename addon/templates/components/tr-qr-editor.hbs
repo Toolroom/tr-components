@@ -1,0 +1,43 @@
+{{#tr-editor as |e|}}
+    {{#e.label}}
+        {{tr-error-tooltip errors=errors}}
+        {{label}}
+        {{tr-info-tooltip title=title content=info}}
+    {{/e.label}}
+    {{#if prefix}}
+        {{#e.prefix}}
+            {{tr-string-html prefix}}
+        {{/e.prefix}}
+    {{/if}}
+    {{#e.content}}
+        {{#if value}}
+            <span class="tr-qrcode-editor-code">
+                {{qr-code text=value width=size height=size correctLevel="L" style="inline-block"}}
+            </span>
+        {{else}}
+            <span class="tr-qrcode-editor-code">
+                <i class="fa fa-qrcode fa-2x fade"></i>
+            </span>
+        {{/if}}
+        <div style="margin-left: 80px;">
+            <small>
+                {{#if isEditing}}
+                    {{tr-text-editor value=value maxLength=maxLength}}
+                    <button class="tr-qrcode-editor-button" {{action 'commit'}}><i class="fa fa-check"></i></button>
+                {{else}}
+                    {{#if value}}
+                        Code: '{{value}}'<br>
+                        <button class="tr-qrcode-editor-button" {{action 'edit'}}><i class="fa fa-pencil"></i></button>
+                    {{/if}}
+                    <button class="tr-qrcode-editor-button" {{action 'generateNew'}}><i class="fa fa-refresh"></i>
+                    </button>
+                {{/if}}
+            </small>
+        </div>
+    {{/e.content}}
+    {{#if postfix}}
+        {{#e.postfix}}
+            {{tr-string-html postfix}}
+        {{/e.postfix}}
+    {{/if}}
+{{/tr-editor}}

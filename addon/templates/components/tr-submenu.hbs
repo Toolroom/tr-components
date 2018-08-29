@@ -1,5 +1,5 @@
 {{#tr-button-editor text=text label=label placeholder=placeholder errors=errors buttonClass=buttonClass isDisabled=isDisabled readonly=isReadonly
-                    onClick=(action 'onClick')}}
+                    highlight=highlight onClick=(action 'onClick')}}
     {{yield (hash text=(component 'tr-container' classNames='tr-submenu-custom-text'))}}
     <button class="tr-select-editor-button-arrow" {{action 'onToggleState' bubbles=false}} disabled={{isDisabled}}><span>&#9660;</span></button>
 {{/tr-button-editor}}

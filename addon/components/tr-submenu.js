@@ -6,8 +6,10 @@ export default Ember.Component.extend(OutsideClick, {
     layout,
     text: null,
     classNames: 'tr-submenu tr-editor',
+    classNameBindings: ['highlight:is-highlight'],
 
     isOpen: false,
+    highlight: false,
 
     open: function() {
         this.set('isOpen', true);
