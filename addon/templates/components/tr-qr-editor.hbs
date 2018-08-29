@@ -27,10 +27,11 @@
                 {{else}}
                     {{#if value}}
                         Code: '{{value}}'<br>
-                        <button class="tr-qrcode-editor-button" {{action 'edit'}}><i class="fa fa-pencil"></i></button>
+                    {{else}}
+                        Code: n/a
                     {{/if}}
-                    <button class="tr-qrcode-editor-button" {{action 'generateNew'}}><i class="fa fa-refresh"></i>
-                    </button>
+                    <button class="tr-qrcode-editor-button" {{action 'edit'}}><i class="fa fa-pencil"></i></button>
+                    <button class="tr-qrcode-editor-button" {{action 'generateNew'}}><i class="fa fa-refresh"></i></button>
                 {{/if}}
             </small>
         </div>
