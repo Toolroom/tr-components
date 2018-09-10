@@ -6,6 +6,11 @@
             {{tr-info-tooltip title=title content=info}}
         {{/e.label}}
     {{/if}}
+    {{#if prefix}}
+        {{#e.prefix}}
+            {{tr-string-html prefix}}
+        {{/e.prefix}}
+    {{/if}}
     {{#e.content}}
         <button type="{{type}}" class={{buttonClass}} disabled={{isDisabled}} readonly={{isReadonly}} {{action "onClick" value}}>
                 {{#if (tr-eq style 'toggle')}}

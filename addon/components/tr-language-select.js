@@ -6,9 +6,14 @@ export default Editor.extend({
     layout,
 
     i18n: Ember.inject.service(),
+    settings: Ember.inject.service(),
     moment: Ember.inject.service(),
     classNames: ['tr-language-select'],
     buttonClass: '',
+
+    locale: Ember.computed('i18n', function() {
+        return this.get('i18n.locale');
+    }),
 
     /**
      * Alignment of the combo content:
@@ -20,7 +25,7 @@ export default Editor.extend({
 
     locales: Ember.computed('i18n.locale', 'i18n.locales', function() {
         const i18n = this.get('i18n');
-        var items = this.get('i18n.locales').map(function (loc) {
+        let items = this.get('i18n.locales').map(function (loc) {
             return Ember.Object.create({ key: loc, value: i18n.t('global.locales.' + loc).toString() });
         });
         return items;
@@ -28,7 +33,7 @@ export default Editor.extend({
 
     actions: {
         setLocale(locale) {
-            this.set('i18n.locale', locale.key);
+            this.set('settings.locale', locale.key);
             this.get('moment').setLocale(locale.key);
         }
     }
