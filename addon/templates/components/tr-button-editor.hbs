@@ -12,7 +12,7 @@
         {{/e.prefix}}
     {{/if}}
     {{#e.content}}
-        <button type="{{type}}" class={{buttonClass}} disabled={{isDisabled}} readonly={{isReadonly}} {{action "onClick" value}}>
+        <button type="{{type}}" class={{buttonClass}} disabled={{compare isDisabled '||' _isBusyDisabled}} readonly={{isReadonly}} {{action "onClick" value}}>
                 {{#if (tr-eq style 'toggle')}}
                     <span class="tr-button-editor-toggle-icon">
                         &#10004;

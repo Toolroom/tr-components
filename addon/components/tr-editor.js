@@ -1,7 +1,8 @@
 import Ember from 'ember';
+import BusyKeys from '../mixins/busy-keys';
 import layout from '../templates/components/tr-editor';
 
-export default Ember.Component.extend({
+export default Ember.Component.extend(BusyKeys, {
     layout,
     concatenatedProperties: ['i18nProperties'],
 
@@ -25,9 +26,22 @@ export default Ember.Component.extend({
     isDisabled: false,
     isReadonly: false,
     isVisible: true,
+    isBusy: false,
+    isDisabledWhenBusy: true,
     autocomplete: null,
 
-    isBusy: false,
+    /**
+     * If isDisabledWhenBusy is true, this flag announces the its state
+     */
+    _isBusyDisabled: Ember.computed('isBusy','isDisabledWhenBusy', function() {
+        if(!this.get('isDisabledWhenBusy')) {
+            return undefined;
+        }
+
+        return this.get('isBusy');
+    }),
+
+    /*isBusy: false,
     _isBusy: Ember.computed('isBusy', 'busyKeys', function(){
         let keys = this.get('busyKeys'),
             isBusy = this.get('isBusy');
@@ -48,7 +62,7 @@ export default Ember.Component.extend({
 
         if(keys && keys.indexOf(busyKey) > -1) return;
         keys.pushObject(busyKey);
-    },
+    },*/
 
     isDisabledOrReadonly: Ember.computed('isDisabled', 'isReadonly', function () {
         return this.get('isDisabled') || this.get('isReadonly');

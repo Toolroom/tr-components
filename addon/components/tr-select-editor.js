@@ -44,8 +44,8 @@ export default Editor.extend(OutsideClick, {
     valueProperty: 'value',
 
     displayValue: Ember.computed(
-        'selectedItems', 'selectedItems.length', 'selectedItems.@each.isLoaded', 'selectedItems.@each.isLoading', 'selectedItems.isPending', 
-        'selectedItem', 'selectedItem.isFulfilled', 
+        'selectedItems', 'selectedItems.length', 'selectedItems.@each.isLoaded', 'selectedItems.@each.isLoading', 'selectedItems.isPending',
+        'selectedItem', 'selectedItem.isFulfilled',
         'isMultiple', 'i18n.locale', function() {
         if(this.get('isMultiple')) {
             let items = this.get('selectedItems'),
@@ -63,7 +63,11 @@ export default Editor.extend(OutsideClick, {
         if(!selectedItem) return selectedItem;
 
         let isBusy = selectedItem.then && !selectedItem.isFulfilled;
-        this.setBusy('displayValue', isBusy);
+        if(isBusy) {
+            this.busy('displayValue');
+        } else {
+            this.idle('displayValue');
+        }
         if(isBusy) return null;
 
         return this._getValue(selectedItem);

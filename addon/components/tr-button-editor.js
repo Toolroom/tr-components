@@ -9,7 +9,7 @@ export default Editor.extend({
     routing: Ember.inject.service('-routing'),
 
     classNames: 'tr-button-editor',
-    classNameBindings: ['highlight:is-highlight', 'isOn:is-on:is-off', 'styleClassName'],
+    classNameBindings: ['highlight:is-highlight', 'isOn:is-on:is-off', 'styleClassName', 'isBusy'],
     //placeholder: Ember.String.htmlSafe("&nbsp;"),
     placeholder: null,
     buttonClass: null,
@@ -40,12 +40,16 @@ export default Editor.extend({
 
     actions: {
         onClick(value) {
-            var onClick = this.get('onClick');
+            if(this.get('_isBusyDisabled') === true || this.get('isDisabled')) {
+                return;
+            }
+
+            let onClick = this.get('onClick');
             if(onClick){
                 onClick(value);
             }
 
-            var route = this.get('route'),
+            let route = this.get('route'),
                 routeParams = this.get('routeParams');
             if(route) {
                 this.get('routing').transitionTo(route, routeParams);

@@ -3,7 +3,7 @@ import layout from '../../templates/components/widgets/tr-widget';
 
 export default Ember.Component.extend({
     layout,
-    
+
     routing: Ember.inject.service('-routing'),
 
     tagName: 'div',
@@ -17,11 +17,11 @@ export default Ember.Component.extend({
 
     data: null,
     _contentDidChange: Ember.observer('data', function() {
-        var data = this.get('data');
+        let data = this.get('data');
 
         if(!data) return;
 
-        var content = this.get('data.object'),
+        let content = this.get('data.object'),
             identifier = this.getIdentifier();
 
         if(!content[identifier]) {
@@ -46,22 +46,22 @@ export default Ember.Component.extend({
     onChange: null,
     onIsEditingChanged: Ember.observer('isEditing', function() {
         if(this.get('isEditing')) {
-            var self = this;
+            let self = this;
             this.$()
                 .resizable({
                     resize: function(event, ui) {
-                        var minWidth = self.get('minWidth'),
+                        let minWidth = self.get('minWidth'),
                             maxWidth = self.get('maxWidth'),
                             minHeight = self.get('minHeight'),
                             maxHeight = self.get('maxHeight');
 
-                        var currentW = $(ui.element).outerWidth(),
+                        let currentW = $(ui.element).outerWidth(),
                             width = parseInt((currentW+8) / 168);
                         self.$(ui.element).css('width', '');
                         width = width < minWidth ? minWidth : (width > maxWidth ? maxWidth : width);
                         self.set('width', width);
 
-                        var currentH = $(ui.element).outerHeight(),
+                        let currentH = $(ui.element).outerHeight(),
                             height = parseInt((currentH+8) / 168);
                         self.$(ui.element).css('height', '');
                         height = height < minHeight ? minHeight : (height > maxHeight ? maxHeight : height);
@@ -75,10 +75,10 @@ export default Ember.Component.extend({
                     //stack: '#' + this.get('elementId') + '>.tr-board-widget'
                     stop: function(event, ui) {
 
-                        var currentX = ui.position.left;
+                        let currentX = ui.position.left;
                         self.set('x', parseInt((currentX-8) / 168));
 
-                        var currentY = ui.position.top;
+                        let currentY = ui.position.top;
                         self.set('y', parseInt((currentY-8) / 168));
 
                         self.triggerOnChange();
@@ -116,7 +116,7 @@ export default Ember.Component.extend({
     }),
     widgetLayoutClassNames: Ember.computed('x', 'y', 'width', 'height', {
         get() {
-            var x = this.get('x'),
+            let x = this.get('x'),
                 y = this.get('y'),
                 width = this.get('width'),
                 height = this.get('height'),
@@ -132,13 +132,13 @@ export default Ember.Component.extend({
             return `tr-board-widget-x-${x} tr-board-widget-y-${y} tr-board-widget-w-${width} tr-board-widget-h-${height}`;
         }
     }),
- 
+
     getIdentifier() {
-        var boardId = this.get('boardId'),
+        let boardId = this.get('boardId'),
             type = this.get('type'),
             id = this.get('id');
 
-        var str = `widget___${boardId}___${id}___${type}`;
+        let str = `widget___${boardId}___${id}___${type}`;
 
         str = str.replace(new RegExp('[.-]', 'g'),'');
 
@@ -153,10 +153,10 @@ export default Ember.Component.extend({
         };
     },
     triggerOnChange() {
-        var fun = this.get('onChange');
+        let fun = this.get('onChange');
         if(!fun) return;
 
-        var identifier = this.getIdentifier(),
+        let identifier = this.getIdentifier(),
             position = this.getPosition();
 
         fun(identifier, position);
