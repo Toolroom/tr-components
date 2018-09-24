@@ -1,6 +1,6 @@
 {
   "name": "@toolroom/tr-ember-components",
-  "version": "0.0.49",
+  "version": "0.0.50",
   "description": "Toolroom UI Components for Ember.",
   "keywords": [
     "ember-addon",
