@@ -31,7 +31,7 @@
             {{#with emptyText}}
                 {{#tr-listview items=filteredItems itemClass=null selectedItem=(readonly selectedItem) onSelectedItemChanged=(action 'onSelectedItemChanged') as |item|}}
                     {{#if item.itemTemplate}}
-                        {{yield (hash data=item.data isSelected=(array-contains selectedItems item.data) itemTemplate=(component 'tr-container'))}}
+                        {{yield (hash data=item.data isSelected=(array-contains selectedItems item.data selectedItems.length) itemTemplate=(component 'tr-container'))}}
                     {{else}}
                         {{#if valueProperty}}
                             <span title="{{get item.data valueProperty}}">{{get item.data valueProperty}}</span>
