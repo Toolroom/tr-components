@@ -26,7 +26,7 @@ export default Editor.extend({
     locales: Ember.computed('i18n.locale', 'i18n.locales', function() {
         const i18n = this.get('i18n');
         let items = this.get('i18n.locales').map(function (loc) {
-            return Ember.Object.create({ key: loc, value: i18n.t('global.locales.' + loc).toString() });
+            return Ember.Object.create({ key: loc, value: i18n.t('global.locales.native.' + loc).toString() });
         });
         return items;
     }),
