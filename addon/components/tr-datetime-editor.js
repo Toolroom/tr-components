@@ -1,4 +1,3 @@
-import Ember from 'ember';
 import Editor from './tr-editor';
 import { computed, observer } from '@ember/object';
 import layout from '../templates/components/tr-datetime-editor';

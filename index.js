@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-  name: '@toolroom/tr-ember-components',
+  name: '@bitbird/core.js.ui',
   included: function(app) {
     //app.import('addon/styles/style.css');
 

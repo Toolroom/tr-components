@@ -1,7 +1,7 @@
 {
-  "name": "@toolroom/tr-ember-components",
+  "name": "@bitbird/core.js.ui",
   "version": "0.1.0",
-  "description": "Toolroom UI Components for Ember.",
+  "description": "Bitbird components for ember.js.",
   "keywords": [
     "ember-addon",
     "tr-components",

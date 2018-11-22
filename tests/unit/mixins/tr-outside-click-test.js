@@ -1,5 +1,5 @@
 import EmberObject from '@ember/object';
-import TrOutsideClickMixin from '@toolroom/tr-ember-components/mixins/tr-outside-click';
+import TrOutsideClickMixin from '@bitbird/core.js.ui/mixins/tr-outside-click';
 import { module, test } from 'qunit';
 
 module('Unit | Mixin | tr outside click');

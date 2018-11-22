@@ -1,1 +1,1 @@
-export { default } from '@toolroom/tr-ember-components/components/tr-demo';
+export { default } from '@bitbird/core.js.ui/components/tr-demo';
