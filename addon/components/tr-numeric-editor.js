@@ -1,7 +1,7 @@
-import Ember from 'ember';
+import { computed, observer } from '@ember/object';
 import Editor from './tr-text-editor';
 import layout from '../templates/components/tr-numeric-editor';
-const { next } = Ember.run;
+import { A } from '@ember';
 
 export default Editor.extend({
     layout,
@@ -12,18 +12,18 @@ export default Editor.extend({
     },
 
     setup: function() {
-        var value = this.get('value'),
+        let value = this.get('value'),
             fractionLength = this.get('fractionLength');
 
         if(!this.isNumericValue(value)) value = this.nullValue();
 
-        var editValueStr = value === null ? '' : value.toString().replace(',','.');
-        var editValue = (fractionLength > 0 ? Number.parseFloat(editValueStr) : Number.parseInt(editValueStr));
+        let editValueStr = value === null ? '' : value.toString().replace(',','.');
+        let editValue = (fractionLength > 0 ? Number.parseFloat(editValueStr) : Number.parseInt(editValueStr));
         if(!this.isNumericValue(editValue)) editValue = this.nullValue();
 
         this._editValue = editValue;
 
-        var displayValue = this.isNumericValue(editValue) ? editValue.toLocaleString() : null;
+        let displayValue = this.isNumericValue(editValue) ? editValue.toLocaleString() : null;
         this.set('displayValue', displayValue);
         this.set('internalEditValue', displayValue);
     },
@@ -52,13 +52,13 @@ export default Editor.extend({
      */
     displayValue: null,
 
-    editValueDidChange: Ember.observer('editValue', function() {
-        var editValue = this.get('editValue'),
+    editValueDidChange: observer('editValue', function() {
+        let editValue = this.get('editValue'),
             fractionLength = this.get('fractionLength');
 
         editValue = (fractionLength > 0 ? Number.parseFloat(editValue) : Number.parseInt(editValue));
         if(editValue === null || Number.isNaN(editValue)) editValue = this.nullValue();
-        var editValueStr = editValue === null ? null : editValue.toFixed(fractionLength);
+        let editValueStr = editValue === null ? null : editValue.toFixed(fractionLength);
         editValue = (fractionLength > 0 ? Number.parseFloat(editValueStr) : Number.parseInt(editValueStr));
         if(editValue === null || Number.isNaN(editValue)) editValue = this.nullValue();
 
@@ -68,9 +68,9 @@ export default Editor.extend({
     /**
      * The NUMBER value of the editor
      */
-    editValue: Ember.computed('value', {
+    editValue: computed('value', {
         set(sender, value) {
-            var fractionLength = this.get('fractionLength');
+            let fractionLength = this.get('fractionLength');
             value = value != null && value !== undefined ? value.toString() : '';
             value = value.replace(',','.');
             value = (fractionLength > 0 ? Number.parseFloat(value) : Number.parseInt(value));
@@ -94,7 +94,7 @@ export default Editor.extend({
     /**
      * Synchronizes the editValue with the value
      */
-    updateEditValueFromValue: Ember.observer('value', function() {
+    updateEditValueFromValue: observer('value', function() {
         let value = this.get('value'),
             fractionLength = this.get('fractionLength');
 
@@ -112,30 +112,25 @@ export default Editor.extend({
         return val !== null && val !== undefined && !Number.isNaN(val);
     },
 
-    updateEditValueFromInternalEditValue: Ember.observer('internalEditValue', function() {
+    updateEditValueFromInternalEditValue: observer('internalEditValue', function() {
         if(!this.get('isEditing')) return;
-        var internalEditValue = this.get('internalEditValue'),
+        let internalEditValue = this.get('internalEditValue'),
             internalEditValueStr = (this.isNumericValue(internalEditValue) ? internalEditValue.toString() : '').replace(',','.'),
             fractionLength = this.get('fractionLength');
 
-        var editValue = (fractionLength > 0 ? Number.parseFloat(internalEditValueStr) : Number.parseInt(internalEditValueStr));
+        let editValue = (fractionLength > 0 ? Number.parseFloat(internalEditValueStr) : Number.parseInt(internalEditValueStr));
         if(editValue === null || Number.isNaN(editValue)) editValue = this.nullValue();
         editValue = editValue === null ? null : editValue.toFixed(fractionLength);
 
         this.set('editValue', editValue);
     }),
 
-    updateFromIsEditing: Ember.observer('isEditing', function() {
+    updateFromIsEditing: observer('isEditing', function() {
         if(this.get('isEditing'))
         {
-            var editValue = this.get('editValue');
+            let editValue = this.get('editValue');
             if(editValue === null || editValue === undefined) editValue = this.nullValue();
             editValue = (editValue === null ? '' : editValue).toString();
-                /*,
-                fractionLength = this.get('fractionLength');
-
-            var editValueStr = editValue.toFixed(fractionLength);
-            editValue = (fractionLength > 0 ? Number.parseFloat(editValueStr) : Number.parseInt(editValueStr)) || 0*/;
             this.set('internalEditValue', editValue.replace('.', this._getLocalDecimalSeparator()));
         }
         else
@@ -151,7 +146,7 @@ export default Editor.extend({
 
     isKeyValid: function(evt) {
         evt = (evt) ? evt : window.event;
-        var editValue = this.get('editValue'),
+        let editValue = this.get('editValue'),
             strVal = (editValue === null ? '' : editValue).toString().replace(',','.'),
             fractionPosition = strVal.indexOf('.'),
             fractionLength = this.get('fractionLength'),
@@ -199,14 +194,14 @@ export default Editor.extend({
         }
 
         //Generate a preview
-        var char = evt.key;
+        let char = evt.key;
         if(["0","1","2","3","4","5","6","7","8","9",",",".","-"].indexOf(char) > -1) {
             char = char == ',' ? '.' : char;
-            /*var displayValue = (this.$('input').val() || '').replace(',','.');
-            var preview = [displayValue.slice(0, selection.start), char, displayValue.slice(selection.end)].join('');//strVal.sli(caretPosition, 0, char);
+            /*let displayValue = (this.$('input').val() || '').replace(',','.');
+            let preview = [displayValue.slice(0, selection.start), char, displayValue.slice(selection.end)].join('');//strVal.sli(caretPosition, 0, char);
 
-            var numericPreview = (fractionLength > 0 ? Number.parseFloat(preview) : Number.parseInt(preview)) || null;*/
-            var numericPreview = this._getPreviewValue(evt, char);
+            let numericPreview = (fractionLength > 0 ? Number.parseFloat(preview) : Number.parseInt(preview)) || null;*/
+            let numericPreview = this._getPreviewValue(evt, char);
             if(numericPreview === null || numericPreview === undefined) {
                 return false;
             }
@@ -227,7 +222,7 @@ export default Editor.extend({
     },
 
     isValueValid: function(value, fixValueOnValidation) {
-        var fractionLength = this.get('fractionLength'),
+        let fractionLength = this.get('fractionLength'),
             min = this.get('minValue'),
             max = this.get('maxValue'),
             allowNull = this.get('allowNull');
@@ -240,7 +235,7 @@ export default Editor.extend({
             value = value.replace(",",".");
         }
 
-        var val = fractionLength > 0 ? Number.parseFloat(value) : Number.parseInt(value);
+        let val = fractionLength > 0 ? Number.parseFloat(value) : Number.parseInt(value);
 
         //if(val === null || Number.isNaN(val)) val = allowNull ? null : 0;
         if(Number.isNaN(val)) val = null;
@@ -280,11 +275,6 @@ export default Editor.extend({
         if(!this.isValueValid(this.get('value'), true)) {
             this.set('value', this.get('minValue'));
         }
-        /*this.set('internalEditValue', null);
-        this.updateEditValueFromValue();
-        next(this, function() {
-            this.set('isEditing', false);
-        })*/
     },
 
     focusIn: function() {
@@ -292,8 +282,8 @@ export default Editor.extend({
     },
 
     keyDown: function(evt) {
-        //var decimalSeparator = this._getLocalDecimalSeparator(),
-        var charCodeWhitelist = [
+        //let decimalSeparator = this._getLocalDecimalSeparator(),
+        let charCodeWhitelist = [
             8/*backspace/delete*/,
             46/*delete*/,
             37,38,39,40/*arrows*/,
@@ -301,7 +291,7 @@ export default Editor.extend({
         ];
 
         //Remember current ctrl-key state
-        var ctrlDown = this._ctrlDown;
+        let ctrlDown = this._ctrlDown;
 
         //Update ctrl-key state
         this._updateControlKeyState(evt);
@@ -326,9 +316,9 @@ export default Editor.extend({
         }
     },
 
-    keyPress: function(evt) {
+    //keyPress: function(evt) {
         //return this.isKeyValid(evt);
-    },
+    //},
 
     keyUp: function(evt) {
         //Update ctrl-key state
@@ -336,7 +326,7 @@ export default Editor.extend({
     },
 
     paste: function(evt) {
-        var pasteData = evt.originalEvent.clipboardData.getData('text');
+        let pasteData = evt.originalEvent.clipboardData.getData('text');
 
         if(pasteData.length > 0) {
             pasteData = pasteData.replace(',','.');
@@ -345,7 +335,7 @@ export default Editor.extend({
             }
         }
 
-        var numericPreview = this._getPreviewValue(evt, pasteData);
+        let numericPreview = this._getPreviewValue(evt, pasteData);
 
         if(numericPreview == null || numericPreview.toString().indexOf(pasteData) == -1 || !this.isValueValid(numericPreview, true)) {
             return false;
@@ -353,31 +343,31 @@ export default Editor.extend({
     },
 
     _getPreviewValue: function(evt, str) {
-        var selection = this.getSelection(evt.target);
-        var fractionLength = this.get('fractionLength');
-        var displayValue = (this.$('input').val() || '').replace(',','.');
+        let selection = this.getSelection(evt.target);
+        let fractionLength = this.get('fractionLength');
+        let displayValue = (this.$('input').val() || '').replace(',','.');
 
         str = str.replace(',','.');
 
-        var preview = [displayValue.slice(0, selection.start), str, displayValue.slice(selection.end)].join('');
+        let preview = [displayValue.slice(0, selection.start), str, displayValue.slice(selection.end)].join('');
 
         //If negative minValues are allowed and just a minus is present > this is ok!
         if(preview === '-' && this.get('minValue') < 0) {
             return preview;
         }
 
-        var numericPreview = (fractionLength > 0 ? Number.parseFloat(preview) : Number.parseInt(preview));
+        let numericPreview = (fractionLength > 0 ? Number.parseFloat(preview) : Number.parseInt(preview));
         return typeof(numericPreview) === 'number' && !(isNaN(numericPreview)) ? numericPreview : null;
     },
 
     _ctrlDown: false,
 
-    _controlKeyWhitelist: [
+    _controlKeyWhitelist: A(
         17,91/*ctrl,meta*/
-    ],
+    ),
 
     _updateControlKeyState: function(evt) {
-        var isCtrl = this._controlKeyWhitelist.indexOf(evt.charCode || evt.which) > -1;
+        let isCtrl = this._controlKeyWhitelist.indexOf(evt.charCode || evt.which) > -1;
 
         if(isCtrl) {
             if(evt.type === 'keydown') {
@@ -389,7 +379,7 @@ export default Editor.extend({
     },
 
     _getLocalDecimalSeparator: function() {
-        var n = 1.1;
+        let n = 1.1;
         n = n.toLocaleString().substring(1, 2);
         return n;
     }

@@ -1,18 +1,21 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { inject } from '@ember/service';
+import { computed } from '@ember/object';
+import { observer } from '@ember/object';
 import layout from '../templates/components/tr-board';
 
-export default Ember.Component.extend({
+export default Component.extend({
     layout,
-    
-    settings: Ember.inject.service('settings'),
-    session: Ember.inject.service('session'),
-    
+
+    settings: inject.service('settings'),
+    session: inject.service('session'),
+
     _gridSize: 168,
     _gridSpace: 8,
     _maxTileSize: 4,
     _id: null,
 
-    id: Ember.computed({
+    id: computed({
         get() {
             return this._id;
         },
@@ -35,7 +38,7 @@ export default Ember.Component.extend({
     scope: null,
 
     refreshData: function() {
-        var settings = this.get('settings'),
+        let settings = this.get('settings'),
             self = this;
 
         this.set('isLoading', true);
@@ -47,18 +50,18 @@ export default Ember.Component.extend({
         });
     },
 
-    refreshScreen: Ember.observer('data', 'isEditing', function() {
-        var stringData = this.get('data.data.value'),
+    refreshScreen: observer('data', 'isEditing', function() {
+        let stringData = this.get('data.data.value'),
             maxX = 0,
             maxY = 0;
 
         if(!stringData) return;
 
-        var data = JSON.parse(stringData);
+        let data = JSON.parse(stringData);
 
-        for(var property in data) {
+        for(let property in data) {
             if (data.hasOwnProperty(property)) {
-                var current = data[property],
+                let current = data[property],
                     currentTotalX = current.position.x + current.position.width,
                     currentTotalY = current.position.y + current.position.height;
 
@@ -67,9 +70,9 @@ export default Ember.Component.extend({
             }
         }
 
-        var addonSize =this.get('isEditing') ? this._maxTileSize : 0;
+        let addonSize =this.get('isEditing') ? this._maxTileSize : 0;
 
-        var w = (maxX + addonSize) * this._gridSize + this._gridSpace,
+        let w = (maxX + addonSize) * this._gridSize + this._gridSpace,
             h = (maxY + addonSize) * this._gridSize + this._gridSpace;
 
         /*this.setProperties({
@@ -96,11 +99,11 @@ export default Ember.Component.extend({
             this.get('settings').setRemote(this.get('data'));
         },
         updateWidget(identifier, position) {
-            var setting = this.get('data');
+            let setting = this.get('data');
 
             if(!identifier || !setting) return;
 
-            var o = setting.get('object');
+            let o = setting.get('object');
 
             if(!o[identifier]) {
                 o[identifier] = {

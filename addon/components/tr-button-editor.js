@@ -1,15 +1,17 @@
-import Ember from 'ember';
 import Editor from './tr-editor';
+import { inject } from '@ember/service';
+import { A } from '@ember';
+import { computed } from '@ember/object';
 import layout from '../templates/components/tr-button-editor';
 
 export default Editor.extend({
     layout,
-    i18nProperties: ['placeholder'],
+    i18nProperties: A('placeholder'),
 
-    routing: Ember.inject.service('-routing'),
+    routing: inject.service('-routing'),
 
     classNames: 'tr-button-editor',
-    classNameBindings: ['highlight:is-highlight', 'isOn:is-on:is-off', 'styleClassName', 'isBusy'],
+    classNameBindings: A('highlight:is-highlight', 'isOn:is-on:is-off', 'styleClassName', 'isBusy'),
     //placeholder: Ember.String.htmlSafe("&nbsp;"),
     placeholder: null,
     buttonClass: null,
@@ -23,9 +25,9 @@ export default Editor.extend({
      * Style: button, toggle
      */
     style: 'button',
-    styleClassName: Ember.computed('style', {
+    styleClassName: computed('style', {
         get() {
-            var style = (this.get('style') || '').toString().toLowerCase();
+            let style = (this.get('style') || '').toString().toLowerCase();
             if(style === 'toggle') return 'tr-button-editor-toggle';
             return 'tr-button-editor-button';
         }

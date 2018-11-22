@@ -1,10 +1,11 @@
-import Ember from 'ember';
+import { observer } from '@ember/object';
 import Editor from './tr-editor';
 import layout from '../templates/components/tr-text-editor';
+import { A } from '@ember';
 
 export default Editor.extend({
     layout,
-    i18nProperties: ['placeholder'],
+    i18nProperties: A('placeholder'),
     classNames: 'tr-text-editor',
 
     placeholder: null,
@@ -12,7 +13,7 @@ export default Editor.extend({
 
     onTextChanged: null,
 
-    valueObserver: Ember.observer('value', function() {
+    valueObserver: observer('value', function() {
         if(this.onTextChanged) this.get('onTextChanged')(this.get('value'));
     }),
 

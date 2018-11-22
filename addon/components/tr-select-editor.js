@@ -1,11 +1,12 @@
-import Ember from 'ember';
+import { computed } from '@ember/object';
 import Editor from './tr-editor';
 import OutsideClick from '../mixins/tr-outside-click';
+import { A } from '@ember';
 import layout from '../templates/components/tr-select-editor';
 
 export default Editor.extend(OutsideClick, {
     layout,
-    i18nProperties: ['placeholder'],
+    i18nProperties: A('placeholder'),
 
     init: function() {
         this._super();
@@ -43,8 +44,8 @@ export default Editor.extend(OutsideClick, {
     keyProperty: 'key',
     valueProperty: 'value',
 
-    displayValue: Ember.computed(
-        'selectedItems', 'selectedItems.length', 'selectedItems.@each.isLoaded', 'selectedItems.@each.isLoading', 'selectedItems.isPending',
+    displayValue: computed(
+        'selectedItems', 'selectedItems.{length,@each.isLoaded,@each.isLoading,isPending}',
         'selectedItem', 'selectedItem.isFulfilled',
         'isMultiple', 'i18n.locale', function() {
         if(this.get('isMultiple')) {
@@ -93,7 +94,7 @@ export default Editor.extend(OutsideClick, {
     /**
      * Computed css class for style
      */
-    styleClassName: Ember.computed('style', 'align', {
+    styleClassName: computed('style', 'align', {
         get() {
             let style = (this.get('style') || '').toString().toLowerCase(),
                 align = (this.get('align') || '').toString().toLowerCase();
@@ -139,7 +140,7 @@ export default Editor.extend(OutsideClick, {
     popoutPrimaryText: 'Ok',
 
     /*** OBSERVER ***/
-    _selectedItemChanged: Ember.observer('selectedItem', function() {
+    _selectedItemChanged: computed('selectedItem', function() {
         //next(this, function() {
             this.set('selectedKey', this._getKey(this.get('selectedItem')));
             this.set('selectedValue', this._getValue(this.get('selectedItem')));
@@ -148,7 +149,7 @@ export default Editor.extend(OutsideClick, {
         //});
     }),
 
-    _selectedKeyChanged: Ember.observer('selectedKey', function(){
+    _selectedKeyChanged: computed('selectedKey', function(){
         //next(this, function() {
             var self = this,
                 items = this.get('items') || [];
@@ -167,7 +168,7 @@ export default Editor.extend(OutsideClick, {
         //});
     }),
 
-    _suggestedItemChanged: Ember.observer('suggestedItem', function(){
+    _suggestedItemChanged: computed('suggestedItem', function(){
         var suggestedItem = this.get('suggestedItem');
         //next(this, function() {
             this.set('suggestedValue', this._getValue(suggestedItem));
@@ -260,7 +261,7 @@ export default Editor.extend(OutsideClick, {
         }
     },
 
-    _itemsDidChange: Ember.observer('items', function() {
+    _itemsDidChange: computed('items', function() {
         this.onTextChanged();
     }),
 

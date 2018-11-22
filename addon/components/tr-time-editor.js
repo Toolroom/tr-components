@@ -1,10 +1,11 @@
-import Ember from 'ember';
+import { computed, observer } from '@ember/object';
 import Editor from './tr-text-editor';
 import layout from '../templates/components/tr-time-editor';
+import { A } from '@ember';
 
 export default Editor.extend({
     layout,
-    _formatExpression: Ember.computed('allowSeconds', function() {
+    _formatExpression: computed('allowSeconds', function() {
         if(this.get('allowSeconds')) {
             return /^([0-9]{1,4})(?:(?::)([0-9]{1,2}))?(?:$|(?:(?::)([0-9]{1,2})$)?)/;
         }
@@ -33,9 +34,9 @@ export default Editor.extend({
             return null;
         }
 
-        var result = this._getEmptyObject();
+        let result = this._getEmptyObject();
 
-        var regexp = this.get('_formatExpression'),
+        let regexp = this.get('_formatExpression'),
             matches = str.match(regexp),
             allowSeconds = this.get('allowSeconds');
 
@@ -52,7 +53,7 @@ export default Editor.extend({
         if(!this._editObject) {
             return null;
         }
-        
+
         let str = `${this._pad(this._editObject.hours)}:${this._pad(this._editObject.minutes)}`;
 
         if(this.get('allowSeconds')) {
@@ -81,9 +82,9 @@ export default Editor.extend({
     allowSeconds: false,
 
     _dateValue: null,
-    dateValue: Ember.computed({
+    dateValue: computed({
         get() {
-            var dateValue = this._dateValue,
+            let dateValue = this._dateValue,
                 editObject = this._editObject;
 
             if(editObject)
@@ -121,7 +122,7 @@ export default Editor.extend({
         }
     }),
 
-    editObject: Ember.computed({
+    editObject: computed({
         set(sender, value) {
             this._editObject = value;
 
@@ -135,16 +136,16 @@ export default Editor.extend({
         }
     }),
 
-    updateFromIsEditing: Ember.observer('isEditing', function() {
+    updateFromIsEditing: observer('isEditing', function() {
         if(!this.get('isEditing'))
         {
-            var editObject = this._parse(this.get('internalEditValue'));
+            let editObject = this._parse(this.get('internalEditValue'));
             this.set('editObject', editObject);
             this.set('internalEditValue', this._getStringValue(editObject));
         }
     }),
 
-    updateEditValueFromValue: Ember.observer('value', function() {
+    updateEditValueFromValue: observer('value', function() {
         this.set('editObject', this._parse(this.get('value')));
         this.set('internalEditValue', this._getStringValue(this.get('editObject')));
         this.updateFromIsEditing();
@@ -157,18 +158,14 @@ export default Editor.extend({
 
     isKeyValid: function(evt) {
         evt = (evt) ? evt : window.event;
-        var strVal = this._getStringValue() || '',
-            charCode = (evt.which) ? evt.which : evt.keyCode,
-            charCodeWhitelist = [],
-            selection = this.getSelection(evt.target),
-            caretPosition = selection.start;
-
+        let charCode = (evt.which) ? evt.which : evt.keyCode,
+            charCodeWhitelist = [];
 
         //Generate a preview
-        var char = evt.key;
+        let char = evt.key;
         if(["0","1","2","3","4","5","6","7","8","9",":"].indexOf(char) > -1) {
-            char = char == ',' ? '.' : char;
-            var preview = this._getPreviewValue(evt, char);
+            char = char === ',' ? '.' : char;
+            let preview = this._getPreviewValue(evt, char);
             //console.log(preview);
             if(!preview || !this.isValueValid(preview)) {
                 return false;
@@ -176,7 +173,7 @@ export default Editor.extend({
         }
 
         //Allow only numeric chars
-        if(char != ':' && (charCode > 31 && (charCode < 48 || charCode > 57) && (charCode < 96 || charCode > 105)) || charCodeWhitelist.indexOf(charCode) > -1) {
+        if(char !== ':' && (charCode > 31 && (charCode < 48 || charCode > 57) && (charCode < 96 || charCode > 105)) || charCodeWhitelist.indexOf(charCode) > -1) {
             return false;
         }
 
@@ -189,7 +186,7 @@ export default Editor.extend({
         }
 
         if(value) {
-            var obj = this._parse(value);
+            let obj = this._parse(value);
             if(!(
                 (!this.get('isTime') || (this.get('isTime') && obj.hours >= 0 && obj.hours <= 23)) &&
                 obj.minutes >= 0 && obj.minutes < 60 &&
@@ -210,12 +207,12 @@ export default Editor.extend({
         this.set('isEditing', false);
     },
 
-    focusIn: function(evt) {
+    focusIn: function() {
         this.set('isEditing', true);
     },
 
     keyDown: function(evt) {
-        var charCodeWhitelist = [
+        let charCodeWhitelist = [
                 8/*backspace/delete*/,
                 46/*delete*/,
                 37,38,39,40/*arrows*/,
@@ -223,7 +220,7 @@ export default Editor.extend({
             ];
 
         //Remember current ctrl-key state
-        var ctrlDown = this._ctrlDown;
+        let ctrlDown = this._ctrlDown;
 
         //Update ctrl-key state
         this._updateControlKeyState(evt);
@@ -248,19 +245,15 @@ export default Editor.extend({
         }
     },
 
-    keyPress: function(evt) {
-        //return this.isKeyValid(evt);
-    },
-
     keyUp: function(evt) {
         //Update ctrl-key state
         this._updateControlKeyState(evt);
     },
 
     paste: function(evt) {
-        var pasteData = evt.originalEvent.clipboardData.getData('text');
+        let pasteData = evt.originalEvent.clipboardData.getData('text');
 
-        var preview = this._getPreviewValue(evt, pasteData);
+        let preview = this._getPreviewValue(evt, pasteData);
 
         if(!this.isValueValid(preview, true)) {
             return false;
@@ -268,21 +261,21 @@ export default Editor.extend({
     },
 
     _getPreviewValue: function(evt, str) {
-        var selection = this.getSelection(evt.target);
-        var displayValue = (this.$('input').val() || '');
-        var preview = [displayValue.slice(0, selection.start), str, displayValue.slice(selection.end)].join('');
+        let selection = this.getSelection(evt.target);
+        let displayValue = (this.$('input').val() || '');
+        let preview = [displayValue.slice(0, selection.start), str, displayValue.slice(selection.end)].join('');
 
         return this.get('_formatExpression').test(preview) ? preview : null;
     },
 
     _ctrlDown: false,
 
-    _controlKeyWhitelist: [
+    _controlKeyWhitelist: A(
         17,91/*ctrl,meta*/
-    ],
+    ),
 
     _updateControlKeyState: function(evt) {
-        var isCtrl = this._controlKeyWhitelist.indexOf(evt.charCode || evt.which) > -1;
+        let isCtrl = this._controlKeyWhitelist.indexOf(evt.charCode || evt.which) > -1;
 
         if(isCtrl) {
             if(evt.type === 'keydown') {
@@ -294,7 +287,7 @@ export default Editor.extend({
     },
 
     _getLocalDecimalSeparator: function() {
-        var n = 1.1;
+        let n = 1.1;
         n = n.toLocaleString().substring(1, 2);
         return n;
     }

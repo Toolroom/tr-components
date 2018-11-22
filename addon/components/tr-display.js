@@ -1,9 +1,10 @@
 import Editor from './tr-editor';
 import layout from '../templates/components/tr-display';
+import { A } from '@ember';
 
 export default Editor.extend({
     layout,
-    i18nProperties: ['placeholder'],
+    i18nProperties: A('placeholder'),
 
     classNames: 'tr-display',
 

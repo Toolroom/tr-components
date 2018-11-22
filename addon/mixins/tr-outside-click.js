@@ -1,9 +1,7 @@
-import Ember from 'ember';
-const { on } = Ember;
-//const { next } = Ember.run;
-//import Mixin from '@ember/object/mixin';
+import Mixin from '@ember/object/mixin';
+import { on } from '@ember/object/evented';
 
-export default Ember.Mixin.create({
+export default Mixin.create({
     clickInside() {},
     clickOutside() {},
 

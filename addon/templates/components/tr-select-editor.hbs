@@ -6,17 +6,17 @@
 </ul>
 
 
-{{#if (tr-eq style 'flat')}}
+{{#if (compare style 'flat')}}
     {{#tr-label}}
         {{yield (hash label=(component 'tr-contentpresenter'))}}
     {{/tr-label}}
     {{#each filteredItems as |item|}}
         {{tr-button-editor value=(get item keyProperty) text=(get item valueProperty) style="toggle"
-            isOn=(tr-eq (get item keyProperty) selectedKey)
+            isOn=(compare (get item keyProperty) selectedKey)
             onClick=(action 'onSelectedItemChanged' item)
         }}
     {{/each}}
-{{else if (tr-eq style 'popout')}}
+{{else if (compare style 'popout')}}
     {{#tr-button-editor text=displayValue label=label placeholder=placeholder errors=errors buttonClass=buttonClass isDisabled=isDisabled readonly=isReadonly}}
       {{#unless isDisabledOrReadonly}}
         {{#if allowNull}}
@@ -31,7 +31,7 @@
             {{#with emptyText}}
                 {{#tr-listview items=filteredItems itemClass=null selectedItem=(readonly selectedItem) onSelectedItemChanged=(action 'onSelectedItemChanged') as |item|}}
                     {{#if item.itemTemplate}}
-                        {{yield (hash data=item.data isSelected=(array-contains selectedItems item.data selectedItems.length) itemTemplate=(component 'tr-container'))}}
+                        {{yield (hash data=item.data isSelected=(contains selectedItems item.data selectedItems.length) itemTemplate=(component 'tr-container'))}}
                     {{else}}
                         {{#if valueProperty}}
                             <span title="{{get item.data valueProperty}}">{{get item.data valueProperty}}</span>

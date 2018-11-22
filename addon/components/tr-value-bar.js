@@ -1,7 +1,9 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import { htmlSafe } from '@ember/string';
 import layout from '../templates/components/tr-value-bar';
 
-export default Ember.Component.extend({
+export default Component.extend({
     layout,
     classNames: 'tr-value-bar',
     value: 0,
@@ -9,15 +11,15 @@ export default Ember.Component.extend({
     label: null,
     color: null,
 
-    percentage: Ember.computed('value', 'max', {
+    percentage: computed('value', 'max', {
         get() {
             return 100 / this.get('max') * this.get('value');
         }
     }),
 
-    barCss: Ember.computed('percentage', {
+    barCss: computed('percentage', {
         get() {
-            var p = this.get('percentage');
+            let p = this.get('percentage');
 
             if(p > 0) {
                 if(p <= 5) {
@@ -28,7 +30,7 @@ export default Ember.Component.extend({
                 }
             }
 
-            return Ember.String.htmlSafe(`width:${p}%; background-color:${this.get('color') || ''};opacity:1;`);
+            return htmlSafe(`width:${p}%; background-color:${this.get('color') || ''};opacity:1;`);
         }
     })
 });

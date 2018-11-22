@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-  name: 'tr-ember-components',
+  name: '@toolroom/tr-ember-components',
   included: function(app) {
     //app.import('addon/styles/style.css');
 

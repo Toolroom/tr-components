@@ -1,10 +1,10 @@
-import Ember from 'ember';
+import { inject } from '@ember/service';
 import Editor from './tr-editor';
 import layout from '../templates/components/tr-qr-editor';
 
 export default Editor.extend({
     layout,
-    functions: Ember.inject.service(),
+    functions: inject.service(),
     classNames: 'tr-editor tr-qrcode-editor',
     isEditing: false,
 

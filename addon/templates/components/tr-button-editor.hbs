@@ -13,7 +13,7 @@
     {{/if}}
     {{#e.content}}
         <button type="{{type}}" class={{buttonClass}} disabled={{compare isDisabled '||' _isBusyDisabled}} readonly={{isReadonly}} {{action "onClick" value}}>
-                {{#if (tr-eq style 'toggle')}}
+                {{#if (compare style 'toggle')}}
                     <span class="tr-button-editor-toggle-icon">
                         &#10004;
                     </span>

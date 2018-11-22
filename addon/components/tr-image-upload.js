@@ -1,14 +1,16 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { htmlSafe } from '@ember/string';
+import { computed } from '@ember/object';
 import layout from '../templates/components/tr-image-upload';
 
-export default Ember.Component.extend({
+export default Component.extend({
     layout,
 
     classNames: 'tr-image-upload',
 
     image: null,
-    safeImage: Ember.computed('image', function() {
-        return new Ember.String.htmlSafe("background-image: url(" + this.get('image') + ")" );
+    safeImage: computed('image', function() {
+        return new htmlSafe("background-image: url(" + this.get('image') + ")" );
     }),
     imagePlaceholder: null,
     showImageUpload: false,
@@ -20,7 +22,7 @@ export default Ember.Component.extend({
 
     actions: {
         uploadFile(file) {
-            var onUpload = this.get('onUpload'),
+            let onUpload = this.get('onUpload'),
                 showImageUpload = this.get('showImageUpload');
             if (!onUpload) return;
             if(showImageUpload) {
@@ -28,7 +30,7 @@ export default Ember.Component.extend({
             }
         },
         deleteFile(image) {
-            var onDelete= this.get('onDelete'),
+            let onDelete= this.get('onDelete'),
                 showImageDelete = this.get('showImageDelete');
             if(!onDelete) return;
             if(showImageDelete) {

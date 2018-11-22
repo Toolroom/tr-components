@@ -1,10 +1,14 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { warn } from '@ember/debug';
+import { observer, computed } from '@ember/object';
+import { inject } from '@ember/service';
+
 import layout from '../../templates/components/widgets/tr-widget';
 
-export default Ember.Component.extend({
+export default Component.extend({
     layout,
 
-    routing: Ember.inject.service('-routing'),
+    routing: inject.service('-routing'),
 
     tagName: 'div',
     classNames: 'tr-board-widget',
@@ -16,7 +20,7 @@ export default Ember.Component.extend({
     boardId: null,
 
     data: null,
-    _contentDidChange: Ember.observer('data', function() {
+    _contentDidChange: observer('data', function() {
         let data = this.get('data');
 
         if(!data) return;
@@ -44,7 +48,7 @@ export default Ember.Component.extend({
     _gridSize: 168,
 
     onChange: null,
-    onIsEditingChanged: Ember.observer('isEditing', function() {
+    onIsEditingChanged: observer('isEditing', function() {
         if(this.get('isEditing')) {
             let self = this;
             this.$()
@@ -92,7 +96,7 @@ export default Ember.Component.extend({
                     this.$().resizable('destroy');
                     this.$().draggable('destroy');
                 } catch(ex) {
-                    console.warn(ex);
+                    warn(ex);
                 }
             }
         }
@@ -106,15 +110,15 @@ export default Ember.Component.extend({
                 this.$().resizable('destroy');
                 this.$().draggable('destroy');
             } catch(ex) {
-                console.warn(ex);
+                warn(ex);
             }
         }
     },
 
-    _resizeTrigger: Ember.observer('x', 'y', 'width', 'height', function() {
+    _resizeTrigger: observer('x', 'y', 'width', 'height', function() {
        if(this.onResize) this.onResize();
     }),
-    widgetLayoutClassNames: Ember.computed('x', 'y', 'width', 'height', {
+    widgetLayoutClassNames: computed('x', 'y', 'width', 'height', {
         get() {
             let x = this.get('x'),
                 y = this.get('y'),
@@ -181,7 +185,7 @@ export default Ember.Component.extend({
     absHeight: 160,
     absPadding: 8,
 
-    _updateStyle: Ember.observer('absX', 'absY', 'absWidth', 'absHeight', function() {
+    _updateStyle: observer('absX', 'absY', 'absWidth', 'absHeight', function() {
         this.$().css('left', this.get('absX'));
         this.$().css('top', this.get('absY'));
         this.$().css('width', this.get('absWidth'));

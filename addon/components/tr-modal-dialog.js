@@ -1,7 +1,8 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
 import layout from '../templates/components/tr-modal-dialog';
 
-export default Ember.Component.extend({
+export default Component.extend({
     layout,
     header: null,
 
@@ -19,11 +20,11 @@ export default Ember.Component.extend({
     isMessage: true,
 
     wrapperClass: null,
-    containerClassNames: Ember.computed('isMessage', function() {
+    containerClassNames: computed('isMessage', function() {
         return this.get('isMessage') ? 'tr-message-box' : null;
     }),
 
-    isFooterVisible: Ember.computed('primaryAction', 'secondaryAction', {
+    isFooterVisible: computed('primaryAction', 'secondaryAction', {
         get() {
             return this.get('primaryAction') || this.get('secondaryAction');
         }
@@ -31,7 +32,7 @@ export default Ember.Component.extend({
 
     actions: {
         onClose: function() {
-            var onClose = this.get('onClose');
+            let onClose = this.get('onClose');
             if(onClose) onClose();
         }
     }

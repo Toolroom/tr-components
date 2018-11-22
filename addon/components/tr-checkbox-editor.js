@@ -1,17 +1,18 @@
-import Ember from 'ember';
 import Editor from './tr-editor';
+import { computed } from '@ember/object';
+import { A } from '@ember';
 import layout from '../templates/components/tr-checkbox-editor';
 
 export default Editor.extend({
     layout,
-    i18nProperties: ['placeholder'],
+    i18nProperties: A('placeholder'),
 
     classNames: 'tr-checkbox-editor',
-    classNameBindings: ['_checkStateClass', '_placeholderStateClass'],
+    classNameBindings: A('_checkStateClass', '_placeholderStateClass'),
 
-    _checkStateClass: Ember.computed('value', {
+    _checkStateClass: computed('value', {
         get() {
-            var value = this.get('value');
+            let value = this.get('value');
 
             if(!value) {
                 if(value === null && this.get('allowNull')) {
@@ -24,9 +25,9 @@ export default Editor.extend({
         }
     }),
 
-    _placeholderStateClass: Ember.computed('placeholder', {
+    _placeholderStateClass: computed('placeholder', {
         get() {
-            var placeholder = this.get('placeholder');
+            let placeholder = this.get('placeholder');
 
             if(!placeholder) {
                 if(placeholder === null && this.get('allowNull')) {
@@ -44,7 +45,7 @@ export default Editor.extend({
 
     actions: {
         toggle() {
-            var value = this.get('value'),
+            let value = this.get('value'),
                 isDisabled = this.get('isDisabled'),
                 isReadonly = this.get('isReadonly'),
                 allowNull = this.get('allowNull');

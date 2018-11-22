@@ -1,4 +1,5 @@
-import Ember from 'ember';
+import { observer, computed } from '@ember/object';
+import { htmlSafe } from '@ember/string';
 import Widget from './tr-widget';
 import layout from '../../templates/components/widgets/tr-value-widget';
 
@@ -11,9 +12,9 @@ export default Widget.extend({
     value: null,
     label: null,
     text: null,
-    safeLabel: Ember.computed('label', {
+    safeLabel: computed('label', {
         get() {
-            return Ember.String.htmlSafe(this.get('label'));
+            return htmlSafe(this.get('label'));
         }
     }),
 
@@ -23,19 +24,19 @@ export default Widget.extend({
         return Math.floor(Math.random() * (max - min + 1)) + min
     },
 
-    displayValueInitializer: Ember.observer('value', function() {
-        var value = this.get('value'),
+    displayValueInitializer: observer('value', function() {
+        let value = this.get('value'),
             diff = this.getRandomInteger(10, 15),
             timeout = this.getRandomInteger(8, 12);
 
-        var valueIsNumber = !isNaN(parseFloat(value)) && isFinite(value);
+        let valueIsNumber = !isNaN(parseFloat(value)) && isFinite(value);
 
         if(!valueIsNumber) {
             this.set('displayValue', value);
             return;
         }
 
-        var startValue = value-diff > 0 ? value-diff : value;
+        let startValue = value-diff > 0 ? value-diff : value;
 
         this.count(startValue, value, timeout);
     }).on('init'),
@@ -48,7 +49,7 @@ export default Widget.extend({
      * @param factor random factor to increase or decrease timeout for each run
      */
     count: function(from, to, timeout, factor) {
-        var _this = this;
+        let _this = this;
 
         if(!factor) {
             factor = Math.random() * (1.15 - 1.05) + 1.05;

@@ -1,6 +1,6 @@
 {
   "name": "@toolroom/tr-ember-components",
-  "version": "0.0.52",
+  "version": "0.1.0",
   "description": "Toolroom UI Components for Ember.",
   "keywords": [
     "ember-addon",
@@ -28,6 +28,7 @@
     "ember-cli-htmlbars-inline-precompile": "^1.0.0"
   },
   "devDependencies": {
+    "helpers": "0.9.0",
     "broccoli-asset-rev": "^2.4.5",
     "ember-ajax": "^3.0.0",
     "ember-cli": "~2.18.1",

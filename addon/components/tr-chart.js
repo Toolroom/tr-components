@@ -1,9 +1,10 @@
-import Ember from 'ember';
+import { inject } from '@ember/service';
+import { observer } from '@ember/object';
 import EmberHighChartsComponent from 'ember-highcharts/components/high-charts';
 
 export default EmberHighChartsComponent.extend({
-    i18n: Ember.inject.service(),
-    moment: Ember.inject.service(),
+    i18n: inject.service(),
+    moment: inject.service(),
     i18nTextKeyPrefix: 'highcharts.',
 
     didReceiveAttrs() {
@@ -12,7 +13,7 @@ export default EmberHighChartsComponent.extend({
     },
 
     _updateHighchartsOptions: function() {
-        var self = this;
+        let self = this;
         //Highcharts language options can only be set once when initializing
         let i18n = self.get('i18n');
         if (!i18n) return;
@@ -53,21 +54,21 @@ export default EmberHighChartsComponent.extend({
         });
     },
 
-    localeDidChange:Ember.observer('i18n.locale', function() {
+    localeDidChange: observer('i18n.locale', function() {
         this._updateHighchartsOptions();
         //some options can be set multiple times when calling redraw (e.g. decimalPoint) - so at least update the view with these items
-        var chart = this.get('chart');
+        let chart = this.get('chart');
         if (chart) {
             chart.redraw();
         }
     }),
 
-    contentDidChange: Ember.observer('content', 'content.@each.isLoaded', function() {
-        var chart = this.get('chart');
+    contentDidChange: observer('content', 'content.@each.isLoaded', function() {
+        let chart = this.get('chart');
 
         if (chart) {
             // when re-rendered update the chart subtitle and series name
-            /*var repo = this.get('content')[0].name;
+            /*let repo = this.get('content')[0].name;
             chart.series[0].update({ name: repo, data: this.get('content')[0].data }, false);
             chart.setTitle(null, { text: repo }, false);
             */
@@ -76,8 +77,8 @@ export default EmberHighChartsComponent.extend({
 
     }).on('didInsertElement'),
 
-    redraw: Ember.observer('chartOptions', function() {
-        var chart = this.get('chart'),
+    redraw: observer('chartOptions', function() {
+        let chart = this.get('chart'),
             chartOptions = this.get('chartOptions');
 
         if (!chart) return;

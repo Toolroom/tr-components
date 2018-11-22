@@ -1,16 +1,17 @@
 import Ember from 'ember';
 import Editor from './tr-editor';
+import { computed, observer } from '@ember/object';
 import layout from '../templates/components/tr-datetime-editor';
 
 export default Editor.extend({
     layout,
 
     didInsertElement: function() {
-        var self = this;
+        let self = this;
 
         this._super();
 
-        var input = this.$('input')[0],
+        let input = this.$('input')[0],
             mode = self.get('mode');
 
         this.kalEl = new KalEl(input, {
@@ -37,7 +38,7 @@ export default Editor.extend({
 
     classNames: 'tr-datetime-editor',
     classNameBindings: 'displayMode',
-	
+
     value: null,
 
     displayMode: 'picker',
@@ -45,15 +46,15 @@ export default Editor.extend({
 
     seconds: false,
 
-    displayValue: Ember.computed('value', {
+    displayValue: computed('value', {
         set(key, value) {
             this._setValueFromString(value);
             return this.get('displayValue');
         },
         get() {
-            var value = this.get('value');
+            let value = this.get('value');
             if(value) {
-                var _moment = moment(value);
+                let _moment = moment(value);
                 if(this.get('mode') === 'date') {
                     return _moment.format('L');
                 } else if(this.get('mode') === 'time') {
@@ -68,13 +69,13 @@ export default Editor.extend({
 
     kalEl: null,
 
-    _valueDidChange: Ember.observer('value', function() {
-        var value = this.get('value');
+    _valueDidChange: observer('value', function() {
+        let value = this.get('value');
         this.kalEl.select(value);
     }),
 
     _setValueFromString(value) {
-        var parsedValue = moment(value, "DD.MM.YYYY HH:mm");
+        let parsedValue = moment(value, "DD.MM.YYYY HH:mm");
         if(parsedValue.isValid())
         {
             //console.log("set: " + parsedValue.toDate());

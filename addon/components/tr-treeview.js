@@ -1,8 +1,10 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { run } from '@ember/runloop';
+import { computed } from '@ember/object';
+const { later, cancel } = run;
 import layout from '../templates/components/tr-treeview';
-const { later, cancel } = Ember.run;
 
-export default Ember.Component.extend({
+export default Component.extend({
     layout,
 
     classNames: 'tr-treeview',
@@ -25,9 +27,9 @@ export default Ember.Component.extend({
     itemComponentName: 'tr-container',
 
     didInsertElement: function(){
-        var self = this,
+        let self = this,
             childItemsPropertyName = this.get('childItemsPropertyName');
-        Ember.run.schedule('actions', function () {
+        run.schedule('actions', function () {
             if(!self.get('enableSorting')) return;
             self.$().sortable({
                 axis: 'y',
@@ -40,7 +42,7 @@ export default Ember.Component.extend({
                 revert: true,
                 start: function(event, ui) {
                     self.set('isSorting', true);
-                    var itemId = ui.item.attr('data-item-id'),
+                    let itemId = ui.item.attr('data-item-id'),
                         model = self.get('model.' + childItemsPropertyName).find(function(item) { return item.get('id').toString() == itemId; }),
                         index = $(ui.item).index();
 
@@ -49,7 +51,7 @@ export default Ember.Component.extend({
                     //});
                 },
                 update: function(event, ui) {
-                    var itemId = ui.item.attr('data-item-id'),
+                    let itemId = ui.item.attr('data-item-id'),
                         model = self.get('model.' + childItemsPropertyName).find(function(item) { return item.get('id').toString() == itemId; }),
                         index = $(ui.item).index();
 
@@ -63,7 +65,7 @@ export default Ember.Component.extend({
                         this._sortingStopCallback = null;
                     }
 
-                    var itemId = ui.item.attr('data-item-id'),
+                    let itemId = ui.item.attr('data-item-id'),
                         model = self.get('model.' + childItemsPropertyName).find(function(item) { return item.get('id').toString() == itemId; }),
                         index = $(ui.item).index();
 
@@ -80,7 +82,7 @@ export default Ember.Component.extend({
         });
     },
 
-    self: Ember.computed({
+    self: computed({
         get() {
             return this;
         }

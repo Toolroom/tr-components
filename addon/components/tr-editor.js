@@ -1,14 +1,18 @@
-import Ember from 'ember';
 import BusyKeys from '../mixins/busy-keys';
+import Component from '@ember/component';
+import { inject } from '@ember/service';
+import { computed, observer } from '@ember/object';
+import { isPresent } from '@ember/utils';
 import layout from '../templates/components/tr-editor';
+import { A } from '@ember';
 
-export default Ember.Component.extend(BusyKeys, {
+export default Component.extend(BusyKeys, {
     layout,
-    concatenatedProperties: ['i18nProperties'],
+    concatenatedProperties: A('i18nProperties'),
 
-    i18n: Ember.inject.service(),
+    i18n: inject.service(),
 
-    attributeBindings: ['title'],
+    attributeBindings: A('title'),
 
     classNames: 'tr-editor',
     classNameBindings: ['isDisabled:disabled:enabled', 'isReadonly:readonly'],
@@ -21,7 +25,7 @@ export default Ember.Component.extend(BusyKeys, {
     postfix: null,
 
     i18nKey: null,
-    i18nProperties: ['label', 'title', 'info', 'prefix', 'postfix'],
+    i18nProperties: A('label', 'title', 'info', 'prefix', 'postfix'),
 
     isDisabled: false,
     isReadonly: false,
@@ -33,7 +37,7 @@ export default Ember.Component.extend(BusyKeys, {
     /**
      * If isDisabledWhenBusy is true, this flag announces the its state
      */
-    _isBusyDisabled: Ember.computed('isBusy','isDisabledWhenBusy', function() {
+    _isBusyDisabled: computed('isBusy','isDisabledWhenBusy', function() {
         if(!this.get('isDisabledWhenBusy')) {
             return undefined;
         }
@@ -41,36 +45,13 @@ export default Ember.Component.extend(BusyKeys, {
         return this.get('isBusy');
     }),
 
-    /*isBusy: false,
-    _isBusy: Ember.computed('isBusy', 'busyKeys', function(){
-        let keys = this.get('busyKeys'),
-            isBusy = this.get('isBusy');
-        console.log(keys && keys.get('length') > 0);
-        return isBusy || (keys && keys.get('length') > 0);
-    }),
-    busyKeys: [],
-
-    setBusy(busyKey, isBusy) {
-        let keys = this.get('busyKeys');
-        if(isBusy) {
-            if(!keys || keys.indexOf(busyKey) === -1) return;
-            keys.removeObject(busyKey);
-        } else {
-            if(keys && keys.indexOf(busyKey) > -1) return;
-            keys.pushObject(busyKey);
-        }
-
-        if(keys && keys.indexOf(busyKey) > -1) return;
-        keys.pushObject(busyKey);
-    },*/
-
-    isDisabledOrReadonly: Ember.computed('isDisabled', 'isReadonly', function () {
+    isDisabledOrReadonly: computed('isDisabled', 'isReadonly', function () {
         return this.get('isDisabled') || this.get('isReadonly');
     }),
 
-    title: Ember.computed('value', {
+    title: computed('value', {
         get() {
-            var value = this.get('value'),
+            let value = this.get('value'),
                 length = 0;
 
             if (value) {
@@ -89,18 +70,18 @@ export default Ember.Component.extend(BusyKeys, {
 
     focus: false,
 
-    isValid: Ember.computed('error', {
+    isValid: computed('error', {
         get() {
             return !this.get('error');
         }
     }),
 
-    _triggerFocus: Ember.observer('focus', function () {
+    _triggerFocus: observer('focus', function () {
         if (!this.get('focus')) return;
         this.$('input').focus();
     }).on('didInsertElement'),
 
-    _updateI18n: Ember.observer('i18nKey', 'i18n.locale', function () {
+    _updateI18n: observer('i18nKey', 'i18n.locale', function () {
         let i18nKey = this.get('i18nKey'),
             i18n = this.get('i18n');
 
@@ -115,7 +96,7 @@ export default Ember.Component.extend(BusyKeys, {
 
     _updateI18nForPropertyName: function(i18n, i18nKey, propertyName) {
         let translation = null;
-        if(Ember.isPresent(propertyName)) {
+        if(isPresent(propertyName)) {
             translation = i18n.t(i18nKey + '.' + propertyName, { default: ['editor.default.' + propertyName, 'editor.default.null'] });
         }
         if(translation.toString() !== '\\null\\') this.set(propertyName, translation);

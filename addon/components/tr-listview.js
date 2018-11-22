@@ -1,7 +1,8 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
 import layout from '../templates/components/tr-listview';
 
-export default Ember.Component.extend({
+export default Component.extend({
     layout,
 
     classNames: 'tr-listview',
@@ -48,8 +49,8 @@ export default Ember.Component.extend({
 
     /*keyDown(e) {
         if(e.keyCode == 40) {
-            var items = this.get('items');
-            var selectedIdx = items.indexOf(this.get('selectedItem')) || -1;
+            let items = this.get('items');
+            let selectedIdx = items.indexOf(this.get('selectedItem')) || -1;
 
             this.set('selectedItem', items.objectAt(selectedIdx++))
         }
@@ -60,12 +61,12 @@ export default Ember.Component.extend({
      */
     onSelectedItemChanged(){},
 
-    _items:Ember.computed('items.@each', function() {
-      var self=this;
+    _items: computed('items.@each', function() {
+      let self=this;
       return this.get('items').map(function(item){
         return {
           item: item,
-          id: !!item.get ? item.get(self.get('idPropertyName')) : item[self.get('idPropertyName')]
+          id: item.get ? item.get(self.get('idPropertyName')) : item[self.get('idPropertyName')]
         }
       })
     }),
@@ -75,7 +76,7 @@ export default Ember.Component.extend({
     actions: {
         select(item) {
             this.set('selectedItem', item);
-            var action = this.get('onSelectedItemChanged');
+            let action = this.get('onSelectedItemChanged');
             if(action) {
                 action(item);
             }

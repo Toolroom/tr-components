@@ -16,7 +16,7 @@
                             {{/link-to}}
                         {{/link-to}}
                     {{else}}
-                        <li class="tr-listview-item {{itemClass}} {{if (tr-eq item selectedItem) 'active'}}" {{action "select" item.item}}>
+                        <li class="tr-listview-item {{itemClass}} {{if (compare item selectedItem) 'active'}}" {{action "select" item.item}}>
                             <div class="tr-listview-item-content">
                                 {{yield (hash data=item.item itemTemplate=(component 'tr-container'))}}
                             </div>

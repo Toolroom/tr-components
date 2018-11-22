@@ -1,7 +1,8 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
 import layout from '../templates/components/tr-info-tooltip';
 
-export default Ember.Component.extend({
+export default Component.extend({
   layout,
 
   init: function() {
@@ -13,7 +14,7 @@ export default Ember.Component.extend({
   classNames: ['tr-info-tooltip'],
   classNameBindings: ['type'],
 
-  isVisible: Ember.computed('title', 'content', function() {
+  isVisible: computed('title', 'content', function() {
     return !!(this.get('title') || this.get('content'));
   }),
 
