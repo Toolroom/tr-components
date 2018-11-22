@@ -28,7 +28,6 @@
     "ember-cli-htmlbars-inline-precompile": "^1.0.0"
   },
   "devDependencies": {
-    "helpers": "0.9.0",
     "broccoli-asset-rev": "^2.4.5",
     "ember-ajax": "^3.0.0",
     "ember-cli": "~2.18.1",
